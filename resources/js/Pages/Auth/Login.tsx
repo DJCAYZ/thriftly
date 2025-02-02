@@ -32,15 +32,30 @@ export default function Login({
         <GuestLayout>
             <Head title="Log in" />
 
+            <div className="flex justify-between align-baseline">
+                <div>
+                    <p className="text-2xl">Welcome to Thriftly</p>
+                    <div className="text-lg text-gray-400">Securely Track, Smartly Spend</div>
+                </div>
+                <div>
+                    <p className="text-lg text-gray-400">No Account?</p>
+                    <Link href="/register">
+                        <p className="text-lg text-blue-500 underline">Sign up</p>
+                    </Link>
+                </div>
+            </div>
+
+            <p className="text-5xl mt-6">Sign in</p>
+
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
                     {status}
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form className="mt-6" onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Enter your email address" />
 
                     <TextInput
                         id="email"
@@ -48,6 +63,7 @@ export default function Login({
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
+                        placeholder="Email Address"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
@@ -57,7 +73,7 @@ export default function Login({
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Enter your password" />
 
                     <TextInput
                         id="password"
@@ -65,6 +81,7 @@ export default function Login({
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
+                        placeholder="Password"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -72,25 +89,25 @@ export default function Login({
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData(
-                                    'remember',
-                                    (e.target.checked || false) as false,
-                                )
-                            }
-                        />
-                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-1 mb-5 flex items-center justify-between">
+                    <div className="block">
+                        <label className="flex items-center">
+                            <Checkbox
+                                name="remember"
+                                checked={data.remember}
+                                onChange={(e) =>
+                                    setData(
+                                        'remember',
+                                        (e.target.checked || false) as false,
+                                    )
+                                }
+                            />
+                            <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                                Remember me
+                            </span>
+                        </label>
+                    </div>
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
@@ -100,11 +117,15 @@ export default function Login({
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
                 </div>
+                <PrimaryButton className="w-full text-center" disabled={processing}>
+                    Sign in
+                </PrimaryButton>
             </form>
+            <div className="text-center">OR</div>
+            <PrimaryButton className="w-full" disabled={processing}>
+                Sign in with Google
+            </PrimaryButton>
         </GuestLayout>
     );
 }

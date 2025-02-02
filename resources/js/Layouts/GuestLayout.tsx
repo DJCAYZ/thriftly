@@ -11,7 +11,7 @@ export default function Guest({ children }: PropsWithChildren) {
                 </Link>
             </header>
 
-            <div className="my-auto w-full h-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
+            <div className="my-auto flex flex-col w-full h-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-xl sm:rounded-xl">
                 {children}
             </div>
         </div>
