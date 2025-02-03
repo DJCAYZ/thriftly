@@ -34,26 +34,26 @@ export default function Login({
 
             <div className="flex justify-between align-baseline">
                 <div>
-                    <p className="text-2xl">Welcome to Thriftly</p>
-                    <div className="text-lg text-gray-400">Securely Track, Smartly Spend</div>
+                    <p className="text-md">Welcome to Thriftly</p>
+                    <div className="text-xs text-blue-800/35">Securely Track, Smartly Spend</div>
                 </div>
-                <div>
-                    <p className="text-lg text-gray-400">No Account?</p>
+                <div className="mt-2">
+                    <p className="text-xs text-gray-400">No Account?</p>
                     <Link href="/register">
-                        <p className="text-lg text-blue-500 underline">Sign up</p>
+                        <p className="text-xs text-blue-800/90 underline">Sign up</p>
                     </Link>
                 </div>
             </div>
 
-            <p className="text-5xl mt-6">Sign in</p>
+            <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign in</p>
 
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
+                <div className="w-full bg-green-600/70 mt-4 px-2 text-sm font-medium text-white rounded-xl">
                     {status}
                 </div>
             )}
 
-            <form className="mt-6" onSubmit={submit}>
+            <form className="mt-2" onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Enter your email address" />
 
@@ -72,7 +72,7 @@ export default function Login({
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-6">
                     <InputLabel htmlFor="password" value="Enter your password" />
 
                     <TextInput
@@ -90,7 +90,7 @@ export default function Login({
                 </div>
 
 
-                <div className="mt-1 mb-5 flex items-center justify-between">
+                <div className="mt-3 mb-5 flex items-center justify-between">
                     <div className="block">
                         <label className="flex items-center">
                             <Checkbox
@@ -111,19 +111,19 @@ export default function Login({
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                            className="rounded-md text-sm text-blue-800/90 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
                         >
-                            Forgot your password?
+                            Forgot password?
                         </Link>
                     )}
 
                 </div>
-                <PrimaryButton className="w-full text-center" disabled={processing}>
+                <PrimaryButton className="my-5 w-full py-3" disabled={processing}>
                     Sign in
                 </PrimaryButton>
             </form>
             <div className="text-center">OR</div>
-            <PrimaryButton className="w-full" disabled={processing}>
+            <PrimaryButton className="my-5 py-3 w-full" disabled={true}>
                 Sign in with Google
             </PrimaryButton>
         </GuestLayout>
