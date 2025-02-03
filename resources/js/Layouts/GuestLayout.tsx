@@ -4,14 +4,16 @@ import { PropsWithChildren } from 'react';
 
 export default function Guest({ children }: PropsWithChildren) {
     return (
-        <div className="flex flex-col min-h-screen items-center bg-gray-100 pt-6 sm:pt-0">
+        <div className="flex flex-col min-h-screen items-center bg-[url(/imgs/bg.png)] bg-cover pt-6 sm:pt-0">
             <header className="absolute self-start mt-2">
                 <Link href='/'>
                     <ApplicationLogo className="h-20 w-20 fill text-gray-500" />
                 </Link>
             </header>
 
-            <div className="my-auto flex flex-col w-full h-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-xl">
+            <div className="my-auto flex flex-col w-full h-full overflow-hidden bg-white px-6 py-4 sm:max-w-md sm:rounded-xl" style={{
+                boxShadow: '0 0 25px #00000035'
+            }}>
                 {children}
             </div>
         </div>
