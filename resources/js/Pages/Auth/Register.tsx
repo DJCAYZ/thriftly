@@ -39,7 +39,7 @@ export default function Register() {
                 </div>
             </div>
 
-            <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign in</p>
+            <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign up</p>
 
             <form className="mt-2" onSubmit={submit}>
                 <div>
