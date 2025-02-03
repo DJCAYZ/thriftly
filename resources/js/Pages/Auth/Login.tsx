@@ -39,7 +39,7 @@ export default function Login({
                 </div>
                 <div className="mt-2">
                     <p className="text-xs text-gray-400">No Account?</p>
-                    <Link href="/register">
+                    <Link href={route('register')}>
                         <p className="text-xs text-blue-800/90 underline">Sign up</p>
                     </Link>
                 </div>
