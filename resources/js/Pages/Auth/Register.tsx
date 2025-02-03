@@ -26,6 +26,21 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
+            <div className="flex justify-between align-baseline">
+                <div>
+                    <p className="text-md">Welcome to Thriftly</p>
+                    <div className="text-xs text-blue-800/35">Securely Track, Smartly Spend</div>
+                </div>
+                <div className="mt-2">
+                    <p className="text-xs text-gray-400">Have an Account?</p>
+                    <Link href={route('login')}>
+                        <p className="text-xs text-blue-800/90 underline">Sign in</p>
+                    </Link>
+                </div>
+            </div>
+
+            <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign in</p>
+
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
@@ -104,12 +119,6 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Register
