@@ -41,7 +41,7 @@ export default function Register() {
 
             <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign in</p>
 
-            <form onSubmit={submit}>
+            <form className="mt-2" onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -50,6 +50,7 @@ export default function Register() {
                         name="name"
                         value={data.name}
                         className="mt-1 block w-full"
+                        placeholder="Name"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
@@ -68,6 +69,7 @@ export default function Register() {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
+                        placeholder="Email Address"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
@@ -85,6 +87,7 @@ export default function Register() {
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
+                        placeholder="Password"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
@@ -96,7 +99,7 @@ export default function Register() {
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirm Password"    
                     />
 
                     <TextInput
@@ -105,6 +108,7 @@ export default function Register() {
                         name="password_confirmation"
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
+                        placeholder="Confirm Password"
                         autoComplete="new-password"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
@@ -118,12 +122,9 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
+                <PrimaryButton className="my-4 py-3 w-full" disabled={processing}>
+                    Register
+                </PrimaryButton>
             </form>
         </GuestLayout>
     );
