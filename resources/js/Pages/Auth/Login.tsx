@@ -55,7 +55,7 @@ export default function Login({
 
             <form className="mt-2" onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Enter your email address" />
+                    <InputLabel htmlFor="email" value="Email address" />
 
                     <TextInput
                         id="email"
@@ -73,7 +73,7 @@ export default function Login({
                 </div>
 
                 <div className="mt-6">
-                    <InputLabel htmlFor="password" value="Enter your password" />
+                    <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
                         id="password"
