@@ -14,4 +14,9 @@ export type PageProps<
         user: User;
     };
     ziggy: Config & { location: string };
+    flash: {
+        status: string,
+        tfaQrCode: string,
+        recoveryCodes: string[],
+    }
 };
