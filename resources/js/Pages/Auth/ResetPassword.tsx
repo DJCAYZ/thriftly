@@ -30,25 +30,14 @@ export default function ResetPassword({
         <GuestLayout>
             <Head title="Reset Password" />
 
+            <p className="text-4xl mt-6 text-blue-800 font-semibold">Set a password</p>
+
+            <div className="my-4 text-sm text-gray-600 dark:text-gray-400">
+                Your previous password has been reseted. Please set a new password for your account.
+            </div>
+
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        readOnly
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
+                <div className="mt-2">
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
