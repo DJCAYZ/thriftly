@@ -39,6 +39,11 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'flash' => [
+                'status' =>  fn () => $request->session()->get('status'),
+                'tfaQrCode' => fn () => $request->session()->get('status') == 'two-factor-authentication-enabled' ? $request->user()->twoFactorQrCodeSvg() : null,
+                'recoveryCodes' => fn() => $request->session()->get('status') == 'two-factor-authentication-confirmed' ? $request->user()->recoveryCodes() : null,
+            ],
         ];
     }
 }

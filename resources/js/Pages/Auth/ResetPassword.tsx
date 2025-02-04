@@ -23,9 +23,7 @@ export default function ResetPassword({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.store'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
+        post('/reset-password');
     };
 
     return (
@@ -44,6 +42,7 @@ export default function ResetPassword({
                         className="mt-1 block w-full"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
+                        readOnly
                     />
 
                     <InputError message={errors.email} className="mt-2" />
