@@ -42,6 +42,7 @@ export default function ResetPassword({
                         className="mt-1 block w-full"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
+                        readOnly
                     />
 
                     <InputError message={errors.email} className="mt-2" />
