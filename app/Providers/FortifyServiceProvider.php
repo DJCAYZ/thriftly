@@ -54,6 +54,10 @@ class FortifyServiceProvider extends ServiceProvider
             ]);
         });
 
+        Fortify::confirmPasswordView(function () {
+            return Inertia::render('Auth/ConfirmPassword');
+        });
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
