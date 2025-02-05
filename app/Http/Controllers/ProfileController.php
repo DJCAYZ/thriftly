@@ -54,6 +54,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
+        $user->googleUser->delete();
         $user->delete();
 
         $request->session()->invalidate();
