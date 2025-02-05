@@ -47,6 +47,10 @@ export default function OAuthCallback({
 
             <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign up</p>
 
+            <div className="my-1 text-sm text-gray-600 dark:text-gray-400">
+                It seems that this Google account is not associated with an account in our platform. By continuing, you will have an account created in Thriftly.
+            </div>
+
             <form className="mt-2" onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
