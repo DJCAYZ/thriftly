@@ -29,3 +29,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/two-factor-challenge/recovery-code', function () {
     return Inertia::render('Auth/TwoFactorRecoveryCode');
 });
+
+include __DIR__ . '/auth.php';   

@@ -4,8 +4,8 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { FormEventHandler, MouseEventHandler } from 'react';
 
 export default function Login({
     status,
@@ -27,6 +27,10 @@ export default function Login({
             onFinish: () => reset('password'),
         });
     };
+
+    const googleLogin: MouseEventHandler = (e) => {
+        router.get('/auth/redirect');
+    }
 
     return (
         <GuestLayout>
@@ -120,9 +124,9 @@ export default function Login({
                 </PrimaryButton>
             </form>
             <div className="text-center">OR</div>
-            <PrimaryButton className="my-5 py-3 w-full" disabled={true}>
+            <a href="/auth/redirect" className="text-center my-5 py-3 w-full rounded-md border border-transparent bg-blue-800 px-4 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
                 Sign in with Google
-            </PrimaryButton>
+            </a>
         </GuestLayout>
     );
 }
