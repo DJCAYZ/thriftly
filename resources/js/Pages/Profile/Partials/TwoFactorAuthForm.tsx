@@ -1,3 +1,4 @@
+import DangerButton from '@/Components/DangerButton';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -76,7 +77,7 @@ function DisableTwoFactorAuth({ status = '', className = '' }: { className?: str
         <div>
             {alert}
             <form className={className} onSubmit={onDisableTwoFactorAuth}>
-                <PrimaryButton>Disable 2FA</PrimaryButton>
+                <DangerButton>Disable 2FA</DangerButton>
             </form>
         </div>
     );
