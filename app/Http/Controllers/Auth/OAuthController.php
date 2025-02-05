@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Events\TwoFactorAuthenticationChallenged;
 
 class OAuthController extends Controller
 {
@@ -34,9 +35,20 @@ class OAuthController extends Controller
             ]);
         }
 
-        Auth::login($user->user);
+        $authUser = $user->user;
 
-        return redirect('/dashboard');
+        if ($authUser->hasEnabledTwoFactorAuthentication()) {
+            $request->session()->put([
+                'login.id' => $authUser->getKey(),
+                'login.remember' => true,
+            ]);
+
+            TwoFactorAuthenticationChallenged::dispatch($authUser);
+            return redirect('/two-factor-challenge');
+        } else {
+            Auth::login($authUser, true);
+            return redirect('/dashboard');
+        }
     }
 
     public function store(Request $request) {
@@ -58,8 +70,17 @@ class OAuthController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        if ($user->hasEnabledTwoFactorAuthentication()) {
+            $request->session()->put([
+                'login.id' => $user->getKey(),
+                'login.remember' => true,
+            ]);
 
-        return redirect(route('dashboard', absolute: false));
+            TwoFactorAuthenticationChallenged::dispatch($user);
+            return redirect('/two-factor-challenge');
+        } else {
+            Auth::login($user, true);
+            return redirect('/dashboard');
+        } 
     }
 }
