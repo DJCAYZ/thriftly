@@ -1,15 +1,25 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import Guest from "@/Layouts/GuestLayout";
+import { PageProps } from "@/types";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
 
-export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
+export default function OAuthCallback({
+    id,
+    email,
+    name,
+}: PageProps<{
+    id: string,
+    email: string,
+    name: string,
+}>) {
+    const { data, setData, processing, errors, post, reset } = useForm({
+        id: id,
+        email: email,
+        name: name,
         password: '',
         password_confirmation: '',
     });
@@ -17,13 +27,15 @@ export default function Register() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
+        post('/auth/callback', {
+            onFinish: () => {
+                reset('password', 'password_confirmation');
+            },
         });
-    };
+    }
 
     return (
-        <GuestLayout>
+        <Guest>
             <Head title="Register" />
 
             <div className="flex justify-between align-baseline">
@@ -31,15 +43,13 @@ export default function Register() {
                     <p className="text-md">Welcome to Thriftly</p>
                     <div className="text-xs text-blue-800/35">Securely Track, Smartly Spend</div>
                 </div>
-                <div className="mt-2">
-                    <p className="text-xs text-gray-400">Have an Account?</p>
-                    <Link href={route('login')}>
-                        <p className="text-xs text-blue-800/90 underline">Sign in</p>
-                    </Link>
-                </div>
             </div>
 
             <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign up</p>
+
+            <div className="my-1 text-sm text-gray-600 dark:text-gray-400">
+                It seems that this Google account is not associated with an account in our platform. By continuing, you will have an account created in Thriftly.
+            </div>
 
             <form className="mt-2" onSubmit={submit}>
                 <div>
@@ -126,6 +136,6 @@ export default function Register() {
                     Register
                 </PrimaryButton>
             </form>
-        </GuestLayout>
-    );
+        </Guest>
+    )
 }

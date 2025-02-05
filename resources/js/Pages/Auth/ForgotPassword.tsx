@@ -13,17 +13,17 @@ export default function ForgotPassword({ status }: { status?: string }) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        post('/forgot-password');
     };
 
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.
+            <p className="text-4xl mt-6 text-blue-800 font-semibold">Forgot your password?</p>
+
+            <div className="my-4 text-sm text-gray-600 dark:text-gray-400">
+                Enter your email below to recover your password
             </div>
 
             {status && (
@@ -31,7 +31,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {status}
                 </div>
             )}
-
+            
             <form onSubmit={submit}>
                 <TextInput
                     id="email"
@@ -39,6 +39,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     name="email"
                     value={data.email}
                     className="mt-1 block w-full"
+                    placeholder="Email Address"
                     isFocused={true}
                     onChange={(e) => setData('email', e.target.value)}
                 />
@@ -46,8 +47,8 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 <InputError message={errors.email} className="mt-2" />
 
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
+                    <PrimaryButton className="w-full" disabled={processing}>
+                        Submit
                     </PrimaryButton>
                 </div>
             </form>

@@ -19,6 +19,7 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Edit', [
+            'hasEnabledTwoFactorAuth' => $request->user()->hasEnabledTwoFactorAuthentication(),
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);
@@ -53,6 +54,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
+        $user->googleUser->delete();
         $user->delete();
 
         $request->session()->invalidate();

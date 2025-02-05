@@ -4,8 +4,8 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { FormEventHandler, MouseEventHandler } from 'react';
 
 export default function Login({
     status,
@@ -28,19 +28,38 @@ export default function Login({
         });
     };
 
+    const googleLogin: MouseEventHandler = (e) => {
+        router.get('/auth/redirect');
+    }
+
     return (
         <GuestLayout>
             <Head title="Log in" />
 
+            <div className="flex justify-between align-baseline">
+                <div>
+                    <p className="text-md">Welcome to Thriftly</p>
+                    <div className="text-xs text-blue-800/35">Securely Track, Smartly Spend</div>
+                </div>
+                <div className="mt-2">
+                    <p className="text-xs text-gray-400">No Account?</p>
+                    <Link href={route('register')}>
+                        <p className="text-xs text-blue-800/90 underline">Sign up</p>
+                    </Link>
+                </div>
+            </div>
+
+            <p className="text-5xl mt-6 text-blue-800 font-semibold">Sign in</p>
+
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
+                <div className="w-full bg-green-600/70 mt-4 px-2 text-sm font-medium text-white rounded-xl">
                     {status}
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form className="mt-2" onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Email address" />
 
                     <TextInput
                         id="email"
@@ -48,6 +67,7 @@ export default function Login({
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
+                        placeholder="Email Address"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
@@ -56,7 +76,7 @@ export default function Login({
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-6">
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
@@ -65,6 +85,7 @@ export default function Login({
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
+                        placeholder="Password"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -72,39 +93,40 @@ export default function Login({
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData(
-                                    'remember',
-                                    (e.target.checked || false) as false,
-                                )
-                            }
-                        />
-                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                <div className="mt-3 mb-5 flex items-center justify-between">
+                    <div className="block">
+                        <label className="flex items-center">
+                            <Checkbox
+                                name="remember"
+                                checked={data.remember}
+                                onChange={(e) =>
+                                    setData(
+                                        'remember',
+                                        (e.target.checked || false) as false,
+                                    )
+                                }
+                            />
+                            <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                                Remember me
+                            </span>
+                        </label>
+                    </div>
+                    <Link
+                        href={route('password.request')}
+                        className="rounded-md text-sm text-blue-800/90 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                    >
+                        Forgot password?
+                    </Link>
                 </div>
+                <PrimaryButton className="my-5 w-full py-3" disabled={processing}>
+                    Sign in
+                </PrimaryButton>
             </form>
+            <div className="text-center">OR</div>
+            <a href="/auth/redirect" className="text-center my-5 py-3 w-full rounded-md border border-transparent bg-blue-800 px-4 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
+                Sign in with Google
+            </a>
         </GuestLayout>
     );
 }
