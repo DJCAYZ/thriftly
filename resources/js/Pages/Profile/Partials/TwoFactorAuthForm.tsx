@@ -25,11 +25,11 @@ export default function TwoFactorAuthForm({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                <h2 className="text-lg font-medium text-gray-900">
                     Two Factor Authentication
                 </h2>
     
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600">
                     Increase your account security by utilizing two factor authentication
                 </p>
             </header>
