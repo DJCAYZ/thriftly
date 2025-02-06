@@ -7,7 +7,7 @@ export default function Guest({ children }: PropsWithChildren) {
         <div className="flex flex-col min-h-screen items-center bg-[url(/imgs/bg.png)] bg-cover pt-6 sm:pt-0">
             <header className="absolute self-start mt-2">
                 <Link href='/'>
-                    <ApplicationLogo className="m-2 h-20 w-20" />
+                    <ApplicationLogo hasBrandText className="m-2 h-20 w-20" />
                 </Link>
             </header>
 
