@@ -43,14 +43,14 @@ export default function Register() {
 
             <form className="mt-2" onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Username" />
 
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
                         className="mt-1 block w-full"
-                        placeholder="Name"
+                        placeholder="Username"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
