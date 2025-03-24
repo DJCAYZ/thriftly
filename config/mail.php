@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => env('MAIL_MAILER', 'failover'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +37,23 @@ return [
 
     'mailers' => [
 
+        'gmail' => [
+            'transport' => 'smtp',
+            'encryption' => env('GMAIL_ENCRYPTION', 'ssl'),
+            'host' => env('GMAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('GMAIL_PORT', 465),
+            'username' => env('GMAIL_USERNAME'),
+            'password' => env('GMAIL_PASSWORD'),
+        ],
+
+        'mailpit' => [
+            'transport' => 'smtp',
+            'url' => env('MAILPIT_URL', null),
+            'host' => env('MAILPIT_HOST', 'mailpit'),
+            'port' => env('MAILPIT_PORT', 1025),
+
+        ],
+
         'smtp' => [
             'transport' => 'smtp',
             'scheme' => env('MAIL_SCHEME'),
@@ -54,26 +71,14 @@ return [
             'channel' => env('MAIL_LOG_CHANNEL'),
         ],
 
-        'array' => [
-            'transport' => 'array',
-        ],
-
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
+                'gmail',
+                'mailpit',
                 'log',
             ],
         ],
-
-        'roundrobin' => [
-            'transport' => 'roundrobin',
-            'mailers' => [
-                'ses',
-                'postmark',
-            ],
-        ],
-
     ],
 
     /*
@@ -88,8 +93,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@thriftly.sytes.net'),
+        'name' => env('MAIL_FROM_NAME', 'Thriftly'),
     ],
 
 ];
