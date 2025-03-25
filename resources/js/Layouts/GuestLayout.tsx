@@ -2,12 +2,16 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
+import backgroundImage from '../../img/bg-guest.png';
+
 export default function Guest({ children }: PropsWithChildren) {
     return (
-        <div className="flex flex-col min-h-screen items-center bg-[url(/imgs/bg.png)] bg-cover pt-6 sm:pt-0">
-            <header className="absolute self-start mt-2">
+        <div className="flex flex-col min-h-screen items-center bg-center px-2 py-2 bg-cover sm:pt-0" style={{
+            backgroundImage: `url(${backgroundImage})`
+        }}>
+            <header className="self-start">
                 <Link href='/'>
-                    {/* <ApplicationLogo hasBrandText className="m-2 h-20 w-20" /> */}
+                    <ApplicationLogo className="h-20" />
                 </Link>
             </header>
 

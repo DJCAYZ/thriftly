@@ -1,10 +1,8 @@
-import { DetailedHTMLProps, ImgHTMLAttributes, SVGAttributes } from 'react';
+import logoImage from '../../img/logo.png';
 
 export default function ApplicationLogo({
-    hasBrandText = false,
     className = '',
 }: {
-    hasBrandText?: boolean,
     className?: string,
 }) {
     return (
@@ -17,9 +15,7 @@ export default function ApplicationLogo({
         // </svg>
 
         <div className={'flex items-center ' + className}>
-            <img src='/imgs/logo.png' />
-            <p className={'ml-2 text-5xl font-medium ' + (hasBrandText ? '' : 'hidden')}>Thriftly</p>
+            <img src={logoImage} />
         </div>
-
     );
 }
