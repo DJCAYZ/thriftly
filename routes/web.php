@@ -15,7 +15,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
+    return Inertia::render('Dashboard/Dashboard', [
         'datetime' => date('Y-m-d H:i:s'),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
