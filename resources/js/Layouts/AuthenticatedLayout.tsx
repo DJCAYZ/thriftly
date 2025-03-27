@@ -9,7 +9,8 @@ import { User } from '@/types';
 
 export default function Authenticated({
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+    title,
+}: PropsWithChildren<{ header?: ReactNode, title: string }>) {
     const user = usePage().props.auth.user;
 
     return (
@@ -19,12 +20,19 @@ export default function Authenticated({
             <SidebarProvider>
                 <AppSidebar />
                 <div className='min-h-screen bg-sidebar opacity-90'>
-                    <SidebarTrigger className='w-10 h-10 text-sidebar-foreground'/>
                 </div>
                 
 
                 <main className='w-screen'>
-                    {children}
+                    <div className="py-2">
+                        <div className="max-w-full sm:px-2 lg:px-4">
+                            <div className='mb-2 flex flex-row items-center sticky top-0 bg-sidebar opacity-90 rounded-lg z-50'>
+                                <SidebarTrigger className='w-10 h-10 text-sidebar-foreground'/>
+                                <h1 className='text-white'>{title}</h1>
+                            </div>
+                            {children}
+                        </div>
+                    </div>
                 </main>
             </SidebarProvider>
         </div>

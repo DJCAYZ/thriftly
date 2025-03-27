@@ -20,3 +20,23 @@ export type PageProps<
         recoveryCodes: string[],
     }
 };
+
+export interface Account {
+    id: number,
+    title: string,
+    balance: number,
+    expenseOverview: ExpenseOverview[],
+    recentTransactions: Transaction[],
+};
+
+export interface ExpenseOverview {
+    title: string,
+    amount: number,
+}
+
+export interface Transaction {
+    id: number,
+    category: string,
+    date: Date,
+    amount: number,
+}
