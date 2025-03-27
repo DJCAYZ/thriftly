@@ -19,13 +19,6 @@ export default function AccountOverview({
 }) {
 
     const {balance, expenseOverview, recentTransactions} = account;
-    const chartData = [
-        { title: 'Food', amount: 5000, fill: "hsl(var(--chart-1))" },
-        { title: 'Transport', amount: 2500, fill: "hsl(var(--chart-2))" },
-        { title: 'Electricity', amount: 2500, fill: "hsl(var(--chart-3))" },
-        { title: 'Clothing', amount: 2500, fill: "hsl(var(--chart-4))" },
-        { title: 'Accessories', amount: 2500, fill: "hsl(var(--chart-5))" },
-    ];
 
     return (
         <div className="p-5">
@@ -112,6 +105,7 @@ function ExpenseOverviewChart({
                                 >
                                 {totalAmount.toLocaleString("en-US", {style: 'currency', currency: "PHP"})}
                                 </tspan>
+
                                 <tspan
                                 x={viewBox.cx}
                                 y={(viewBox.cy || 0) + 24}
@@ -120,9 +114,8 @@ function ExpenseOverviewChart({
                                 Total Expense
                                 </tspan>
                             </text>
-                            )
-                        }
-                        }}
+                            );
+                        }}}
                     />
                 </Pie>
             </PieChart>
