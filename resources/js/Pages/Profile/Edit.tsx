@@ -17,7 +17,7 @@ export default function Edit({
             title="Edit Profile"
         >
             <Head title="Profile" />
-            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <TwoFactorAuthForm
                     status={status}
                     hasEnabledTwoFactorAuth={hasEnabledTwoFactorAuth}
@@ -25,7 +25,7 @@ export default function Edit({
                 />
             </div>
 
-            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <UpdateProfileInformationForm
                     mustVerifyEmail={mustVerifyEmail}
                     status={status}
@@ -33,11 +33,11 @@ export default function Edit({
                 />
             </div>
 
-            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <UpdatePasswordForm className="max-w-xl" />
             </div>
 
-            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <DeleteUserForm className="max-w-xl" />
             </div>
         </AuthenticatedLayout>
