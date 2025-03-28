@@ -14,11 +14,7 @@ export default function Edit({
 }: PageProps<{ hasEnabledTwoFactorAuth: boolean, mustVerifyEmail: boolean; status?: string, tfaQrCode?: string }>) {
     return (
         <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
+            title="Edit Profile"
         >
             <Head title="Profile" />
 
