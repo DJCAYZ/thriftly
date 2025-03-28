@@ -1,16 +1,9 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/Components/ui/chart";
 import { Separator } from "@/Components/ui/separator";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
-import { Account, ExpenseOverview, Transaction } from "@/types";
-import { Label, Pie, PieChart } from "recharts";
-
-const chartConfig = {
-    amount: {
-        label: 'Amount',
-    },
-}
+import { Account } from "@/types";
+import RecentTransactions from "./RecentTransactions";
+import ExpenseOverviewChart from "./ExpenseOverviewChart";
 
 export default function AccountOverview({
     account
@@ -63,93 +56,4 @@ export default function AccountOverview({
     );
 }
 
-function ExpenseOverviewChart({
-    expenseOverview,
-}: { expenseOverview: ExpenseOverview[] }) {
 
-    const totalAmount = expenseOverview.reduce((total: number, current): number => {
-        return total + current.amount;
-    }, 0);
-
-    const chartData = expenseOverview.map((category, index) => {
-        return { 'fill': `hsl(var(--chart-${index+1}))`, ...category }
-    })
-    return (
-        <ChartContainer config={chartConfig}>
-            <PieChart>
-                <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />} 
-                />
-                <Pie
-                    data={chartData}
-                    dataKey="amount"
-                    nameKey="title"
-                    innerRadius={60}
-                    strokeWidth={5}
-                >
-                    <Label
-                        content={({ viewBox }) => {
-                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                            return (
-                            <text
-                                x={viewBox.cx}
-                                y={viewBox.cy}
-                                textAnchor="middle"
-                                dominantBaseline="middle"
-                            >
-                                <tspan
-                                x={viewBox.cx}
-                                y={viewBox.cy}
-                                className="fill-foreground text-xl font-bold"
-                                >
-                                {totalAmount.toLocaleString("en-US", {style: 'currency', currency: "PHP"})}
-                                </tspan>
-
-                                <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) + 24}
-                                className="fill-muted-foreground"
-                                >
-                                Total Expense
-                                </tspan>
-                            </text>
-                            );
-                        }}}
-                    />
-                </Pie>
-            </PieChart>
-        </ChartContainer>
-    )
-}
-
-function RecentTransactions({
-    transactions
-} : { transactions: Transaction[] }) {
-    return (
-        <div>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>DATE</TableHead>
-                        <TableHead>CATEGORY</TableHead>
-                        <TableHead>AMOUNT</TableHead>
-                        <TableHead>ACTION</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {transactions.map((transaction) => {
-                        return (
-                            <TableRow key={transaction.id}>
-                                <TableCell>{Intl.DateTimeFormat("en-US").format(transaction.date)}</TableCell>
-                                <TableCell>{transaction.category}</TableCell>
-                                <TableCell>{Intl.NumberFormat("en-US", { style: 'currency', 'currency': 'PHP' }).format(transaction.amount)}</TableCell>
-                                <TableCell><PrimaryButton>Details</PrimaryButton></TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </div>
-    );
-}
