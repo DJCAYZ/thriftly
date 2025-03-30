@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->uuid('ref_id');
             $table->string('title');
             $table->decimal('starting_balance')->default(0.0);
             $table->foreignId('user_id')->constrained(
                 table: 'users', indexName: 'accounts_user_id'
             );
+            $table->timestamps();
         });
     }
 

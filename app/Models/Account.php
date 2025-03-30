@@ -2,24 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Ramsey\Uuid\Uuid;
 
 class Account extends Model
 {
-    public function user(): BelongsTo
+    use HasUuids;
+    protected $table = 'accounts';
+
+    public function transfersTo(): HasMany
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(TransferInfo::class, 'to_account_id');;
     }
 
-    public function transactionInformations(): HasMany
+    public function transfersFrom(): HasMany
     {
-        return $this->hasMany(TransactionInformation::class, 'account_id');
+        return $this->hasMany(TransferInfo::class, 'from_account_id');;
     }
 
-    public function transfersTothisAccount(): HasMany
+    public function transactions(): HasMany
     {
-        return $this->hasMany(TransferTransaction::class, 'to_account_id');
+        return $this->hasMany(Transaction::class, 'account_id');
+    }
+
+    public function newUniqueId(): string
+    {
+        return (string) Uuid::uuid4();
+    }
+
+    public function uniqueIds(): array
+    {
+        return ['ref_id'];
     }
 }
