@@ -26,6 +26,7 @@ export default function AccountOverview({
                 </Link>
             </div>
             <Separator />
+            {recentTransactions.length > 0 ? ( <>
             <div className="flex w-full flex-row">
                 <Card className="flex-1 flex flex-col my-2">
                     <CardHeader className="items-center">
@@ -55,6 +56,7 @@ export default function AccountOverview({
                     <RecentTransactions transactions={recentTransactions} />
                 </div>
             </div>
+            </>) : <p className="mt-5">No transactions found</p>}
         </div>
     );
 }

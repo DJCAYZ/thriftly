@@ -22,7 +22,7 @@ export type PageProps<
 };
 
 export interface Account {
-    id: number,
+    ref_id: string,
     title: string,
     balance: number,
     expenseOverview: ExpenseOverview[],
