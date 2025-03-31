@@ -47,31 +47,61 @@ export default function NewIncome() {
         <div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                    <FormField
-                        control={form.control}
-                        name="account"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Account</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <div className='flex flex-row space-x-5'>
+                        <FormField
+                            control={form.control}
+                            name="account"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormLabel>Account</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select an account" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                        {accounts.map((account) => (
+                                                <SelectItem key={account.ref_id} value={account.ref_id}>{account.title}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        This is the account where this transaction will be recorded.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="category"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormLabel>Category</FormLabel>
                                     <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select an account" />
-                                        </SelectTrigger>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a category" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                            {categories.map((category) => (
+                                                    <SelectItem key={category.ref_id} value={category.ref_id}>{category.title}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                     </FormControl>
-                                    <SelectContent>
-                                    {accounts.map((account) => (
-                                            <SelectItem key={account.ref_id} value={account.ref_id}>{account.title}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                <FormDescription>
-                                    This is the account where this transaction will be recorded.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                                    <FormDescription>
+                                        The category for this income
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
 
                     <FormField
                         control={form.control}
@@ -84,34 +114,6 @@ export default function NewIncome() {
                                 </FormControl>
                                 <FormDescription>
                                     How much was spent in this transaction?
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="category"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a category" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                        {categories.map((category) => (
-                                                <SelectItem key={category.ref_id} value={category.ref_id}>{category.title}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
-                                <FormDescription>
-                                    The category for this expense
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
