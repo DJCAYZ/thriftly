@@ -3,6 +3,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import NewIncome from "./NewFormPartials/NewIncome";
 import { Head } from "@inertiajs/react";
 import NewExpense from "./NewFormPartials/NewExpense";
+import NewTransfer from "./NewFormPartials/NewTransfer";
 
 export default function NewTransaction() {
     return (
@@ -18,7 +19,7 @@ export default function NewTransaction() {
                     </TabsList>
                     <TabsContent value="income"><NewIncome /></TabsContent>
                     <TabsContent value="expense"><NewExpense /></TabsContent>
-                    <TabsContent value="transfer">Transfer</TabsContent>
+                    <TabsContent value="transfer"><NewTransfer /></TabsContent>
                 </Tabs>
             </div>
         </Authenticated>
