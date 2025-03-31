@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
@@ -13,9 +13,7 @@ export default function Edit({
     status,
 }: PageProps<{ hasEnabledTwoFactorAuth: boolean, mustVerifyEmail: boolean; status?: string, tfaQrCode?: string }>) {
     return (
-        <AuthenticatedLayout
-            title="Edit Profile"
-        >
+        <div>
             <Head title="Profile" />
             <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <TwoFactorAuthForm
@@ -40,6 +38,8 @@ export default function Edit({
             <div className="bg-white my-2 p-4 shadow sm:rounded-lg sm:p-8">
                 <DeleteUserForm className="max-w-xl" />
             </div>
-        </AuthenticatedLayout>
+        </div>
     );
 }
+
+Edit.layout = (page: JSX.Element) => <Authenticated children={page} title="Account Settings" />

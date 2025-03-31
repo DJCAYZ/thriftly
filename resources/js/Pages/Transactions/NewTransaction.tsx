@@ -7,21 +7,21 @@ import NewTransfer from "./NewFormPartials/NewTransfer";
 
 export default function NewTransaction() {
     return (
-        <Authenticated title="New Transaction">
+        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="New Transaction" />
-            <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
-                <h2>Transaction Type</h2>
-                <Tabs className="w-full" defaultValue="income">
-                    <TabsList className="w-full justify-around">
-                        <TabsTrigger className="w-full" value="income">Income</TabsTrigger>
-                        <TabsTrigger className="w-full" value="expense">Expense</TabsTrigger>
-                        <TabsTrigger className="w-full" value="transfer">Transfer</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="income"><NewIncome /></TabsContent>
-                    <TabsContent value="expense"><NewExpense /></TabsContent>
-                    <TabsContent value="transfer"><NewTransfer /></TabsContent>
-                </Tabs>
-            </div>
-        </Authenticated>
+            <h2>Transaction Type</h2>
+            <Tabs className="w-full" defaultValue="income">
+                <TabsList className="w-full justify-around">
+                    <TabsTrigger className="w-full" value="income">Income</TabsTrigger>
+                    <TabsTrigger className="w-full" value="expense">Expense</TabsTrigger>
+                    <TabsTrigger className="w-full" value="transfer">Transfer</TabsTrigger>
+                </TabsList>
+                <TabsContent value="income"><NewIncome /></TabsContent>
+                <TabsContent value="expense"><NewExpense /></TabsContent>
+                <TabsContent value="transfer"><NewTransfer /></TabsContent>
+            </Tabs>
+        </div>
     );
 }
+
+NewTransaction.layout = (page: JSX.Element) => <Authenticated children={page} title="New Transaction" />

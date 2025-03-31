@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import AccountOverview from "./Partials/AccountOverview";
 import { Account } from "@/types";
@@ -123,26 +123,26 @@ export default function Dashboard() {
         },
     ]
     return (
-        <AuthenticatedLayout title="Dashboard">
+        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <Head title="Dashboard" />
-                <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <Tabs defaultValue={accounts[0].id.toString()}>
-                        <TabsList className="w-full justify-around">
-                            {accounts.map((account) => {
-                                return (
-                                    <TabsTrigger className="w-full" value={account.id.toString()}>{account.title}</TabsTrigger>
-                                )
-                            })}
-                        </TabsList>
-                        {accounts.map((account) => {
-                            return (
-                                <TabsContent value={account.id.toString()}>
-                                    <AccountOverview account={account} />
-                                </TabsContent>
-                            )
-                        })}
-                    </Tabs>
-            </div>
-        </AuthenticatedLayout>
+            <Tabs defaultValue={accounts[0].id.toString()}>
+                <TabsList className="w-full justify-around">
+                    {accounts.map((account) => {
+                        return (
+                            <TabsTrigger className="w-full" value={account.id.toString()}>{account.title}</TabsTrigger>
+                        )
+                    })}
+                </TabsList>
+                {accounts.map((account) => {
+                    return (
+                        <TabsContent value={account.id.toString()}>
+                            <AccountOverview account={account} />
+                        </TabsContent>
+                    )
+                })}
+            </Tabs>
+    </div>
     );
 }
+
+Dashboard.layout = (page: JSX.Element) => <Authenticated children={page} title="Dashboard" />
