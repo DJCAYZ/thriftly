@@ -4,6 +4,7 @@ import { Separator } from "@/Components/ui/separator";
 import { Account } from "@/types";
 import RecentTransactions from "./RecentTransactions";
 import ExpenseOverviewChart from "./ExpenseOverviewChart";
+import { Link } from "@inertiajs/react";
 
 export default function AccountOverview({
     account
@@ -20,7 +21,9 @@ export default function AccountOverview({
                     <p className="text-sm text-gray-900">ACCOUNT BALANCE</p>
                     <h1 className="text-[4.5rem]">{balance.toLocaleString("en-US", {style:'currency', 'currency': 'PHP'})}</h1>
                 </div>
-                <PrimaryButton className="h-10">New Transaction</PrimaryButton>
+                <Link href='/transactions/new'>
+                    <PrimaryButton className="h-10">New Transaction</PrimaryButton>
+                </Link>
             </div>
             <Separator />
             <div className="flex w-full flex-row">
