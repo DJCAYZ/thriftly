@@ -1,4 +1,4 @@
-import { ChartColumn, ChevronUp, LayoutDashboard, Library, User2 } from "lucide-react"
+import { ChartColumn, ChevronUp, LayoutDashboard, Library, User2, BookMarked } from "lucide-react"
 
 import {
   Sidebar,
@@ -21,6 +21,11 @@ const items = [
     title: "Dashboard",
     url: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    title: "Accounts",
+    url: "/accounts",
+    icon: BookMarked,
   },
   {
     title: "Records",
