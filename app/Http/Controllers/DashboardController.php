@@ -20,7 +20,13 @@ class DashboardController extends Controller
             $recentTransactions = [];
 
             if (!$transactions->isEmpty()) {
-                $balance += $account->transactions()->sum('amount')->get();
+                $balance += $account->transactions()->sum('amount');
+                $recentTransactions = $account->transactions()
+                    ->select('transactions.ref_id', 'transactions.amount', 'transactions.created_at as date', 'transaction_categories.name as category')
+                    ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+                    ->orderBy('created_at', 'desc')
+                    ->take(5)
+                    ->get();
             }
 
             return [

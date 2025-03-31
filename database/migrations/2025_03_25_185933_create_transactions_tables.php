@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaction_categories', function (Blueprint $table) {
             $table->id();
             $table->uuid('ref_id');
+            $table->string('name');
             $table->string('type');
             
             $table->foreignId('user_id')->nullable()->constrained(
