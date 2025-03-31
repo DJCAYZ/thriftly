@@ -3,6 +3,7 @@ import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import AccountOverview from "./Partials/AccountOverview";
 import { Account } from "@/types";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
 
 export default function Dashboard() {
     const accounts: Account[] = [
@@ -18,11 +19,11 @@ export default function Dashboard() {
                 { title: 'Others', amount: 2500 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
         },
         {
@@ -37,11 +38,11 @@ export default function Dashboard() {
                 { title: 'Others', amount: 7000 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
             
         },
@@ -57,11 +58,11 @@ export default function Dashboard() {
                 { title: 'Accessories', amount: 2500 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
         },
         {
@@ -76,11 +77,11 @@ export default function Dashboard() {
                 { title: 'Accessories', amount: 2500 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
         },
         {
@@ -95,11 +96,11 @@ export default function Dashboard() {
                 { title: 'Accessories', amount: 2500 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
         },
         {
@@ -114,11 +115,11 @@ export default function Dashboard() {
                 { title: 'Accessories', amount: 2500 },
             ],
             'recentTransactions': [
-                { 'id': 1, 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 2, 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 3, 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 4, 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
-                { 'id': 5, 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': 'b8dfedb1-a1d8-4051-9bee-2b3b2baf7775', 'category': 'food', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '093da935-f190-4e7a-93ff-f4775a11945d', 'category': 'transport', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '18f194cc-5c23-499e-b1a1-791101aade14', 'category': 'electricity', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'clothing', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
+                { 'ref_id': '88ceb5b5-99b8-4cf5-904d-d5e31deef006', 'category': 'accessories', 'amount': 1000, date: new Date("March 25, 2025 13:00:00") },
             ],
         },
     ]
@@ -145,4 +146,12 @@ export default function Dashboard() {
     );
 }
 
-Dashboard.layout = (page: JSX.Element) => <Authenticated children={page} title="Dashboard" />
+Dashboard.layout = (page: JSX.Element) => <Authenticated children={page} title={
+    <Breadcrumb>
+        <BreadcrumbList>
+            <BreadcrumbItem>
+                <BreadcrumbPage>Dashboard</BreadcrumbPage>
+            </BreadcrumbItem>
+        </BreadcrumbList>
+    </Breadcrumb>
+} />

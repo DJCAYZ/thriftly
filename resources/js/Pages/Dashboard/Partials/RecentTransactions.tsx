@@ -19,7 +19,7 @@ export default function RecentTransactions({
                 <TableBody>
                     {transactions.map((transaction) => {
                         return (
-                            <TableRow key={transaction.id}>
+                            <TableRow key={transaction.ref_id}>
                                 <TableCell>{Intl.DateTimeFormat("en-US").format(transaction.date)}</TableCell>
                                 <TableCell>{transaction.category}</TableCell>
                                 <TableCell>{Intl.NumberFormat("en-US", { style: 'currency', 'currency': 'PHP' }).format(transaction.amount)}</TableCell>

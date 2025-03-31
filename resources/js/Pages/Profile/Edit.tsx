@@ -5,6 +5,7 @@ import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import TwoFactorAuthForm from './Partials/TwoFactorAuthForm';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/Components/ui/breadcrumb';
 
 export default function Edit({
     tfaQrCode = '',
@@ -42,4 +43,12 @@ export default function Edit({
     );
 }
 
-Edit.layout = (page: JSX.Element) => <Authenticated children={page} title="Account Settings" />
+Edit.layout = (page: JSX.Element) => <Authenticated children={page} title={
+    <Breadcrumb>
+        <BreadcrumbList>
+            <BreadcrumbItem>
+                <BreadcrumbPage>Accounts Settings</BreadcrumbPage>
+            </BreadcrumbItem>
+        </BreadcrumbList>
+    </Breadcrumb>
+} />

@@ -29,8 +29,9 @@ const items = [
   },
   {
     title: "Statistics",
-    url: "/dashboard",
+    url: "/statistics",
     icon: ChartColumn,
+    disabled: true,
   },
 ];
 

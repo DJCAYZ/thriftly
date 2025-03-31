@@ -29,13 +29,13 @@ export interface Account {
     recentTransactions: Transaction[],
 };
 
-export interface ExpenseOverview {
+export type ExpenseOverview = {
     title: string,
     amount: number,
 }
 
-export interface Transaction {
-    id: number,
+export type Transaction = {
+    ref_id: string,
     category: string,
     date: Date,
     amount: number,

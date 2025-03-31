@@ -1,9 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import NewIncome from "./NewFormPartials/NewIncome";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import NewExpense from "./NewFormPartials/NewExpense";
 import NewTransfer from "./NewFormPartials/NewTransfer";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
 
 export default function New() {
     return (
@@ -24,4 +25,19 @@ export default function New() {
     );
 }
 
-New.layout = (page: JSX.Element) => <Authenticated children={page} title="New Transaction" />
+New.layout = (page: JSX.Element) => <Authenticated children={page} title={
+    <Breadcrumb>
+        <BreadcrumbList>
+            <BreadcrumbItem>
+                <Link href="/transactions">
+                    <BreadcrumbLink>Transactions</BreadcrumbLink>
+                </Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+                <BreadcrumbPage>New</BreadcrumbPage>
+            </BreadcrumbItem>
+        </BreadcrumbList>
+        
+    </Breadcrumb>
+} />
