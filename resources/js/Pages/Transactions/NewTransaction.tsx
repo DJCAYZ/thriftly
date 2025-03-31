@@ -1,0 +1,26 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import NewIncome from "./NewFormPartials/NewIncome";
+import { Head } from "@inertiajs/react";
+import NewExpense from "./NewFormPartials/NewExpense";
+
+export default function NewTransaction() {
+    return (
+        <Authenticated title="New Transaction">
+            <Head title="New Transaction" />
+            <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
+                <h2>Transaction Type</h2>
+                <Tabs className="w-full" defaultValue="income">
+                    <TabsList className="w-full justify-around">
+                        <TabsTrigger className="w-full" value="income">Income</TabsTrigger>
+                        <TabsTrigger className="w-full" value="expense">Expense</TabsTrigger>
+                        <TabsTrigger className="w-full" value="transfer">Transfer</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="income"><NewIncome /></TabsContent>
+                    <TabsContent value="expense"><NewExpense /></TabsContent>
+                    <TabsContent value="transfer">Transfer</TabsContent>
+                </Tabs>
+            </div>
+        </Authenticated>
+    );
+}

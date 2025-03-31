@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,6 +20,15 @@ Route::get('/dashboard', function () {
         'datetime' => date('Y-m-d H:i:s'),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/transactions/new', function() {
+        return Inertia::render('Transactions/NewTransaction');
+    });
+    Route::post('/transactions/new/{type}', function(Request $request, string $type) {
+        return $type;
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
