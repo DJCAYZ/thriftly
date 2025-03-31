@@ -21,6 +21,7 @@ const formSchema = z.object({
 export default function NewIncome() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        mode: 'onChange',
         defaultValues: {
             amount: 0,
         },
@@ -122,7 +123,7 @@ export default function NewIncome() {
                         name="description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Amount</FormLabel>
+                                <FormLabel>Description</FormLabel>
                                 <FormControl>
                                     <Input placeholder="Description" {...field} />
                                 </FormControl>
