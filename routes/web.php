@@ -21,11 +21,11 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/transactions/new', function() {
+Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
+    Route::get('/new', function() {
         return Inertia::render('Transactions/NewTransaction');
     });
-    Route::post('/transactions/new/{type}', function(Request $request, string $type) {
+    Route::post('/new/{type}', function(Request $request, string $type) {
         return $type;
     });
 });
