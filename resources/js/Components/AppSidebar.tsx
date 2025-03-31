@@ -24,12 +24,12 @@ const items = [
   },
   {
     title: "Records",
-    url: "dashboard",
+    url: "/transactions",
     icon: Library,
   },
   {
     title: "Statistics",
-    url: "dashboard",
+    url: "/dashboard",
     icon: ChartColumn,
   },
 ];

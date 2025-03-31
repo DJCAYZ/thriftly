@@ -5,7 +5,7 @@ import { Head } from "@inertiajs/react";
 import NewExpense from "./NewFormPartials/NewExpense";
 import NewTransfer from "./NewFormPartials/NewTransfer";
 
-export default function NewTransaction() {
+export default function New() {
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="New Transaction" />
@@ -24,4 +24,4 @@ export default function NewTransaction() {
     );
 }
 
-NewTransaction.layout = (page: JSX.Element) => <Authenticated children={page} title="New Transaction" />
+New.layout = (page: JSX.Element) => <Authenticated children={page} title="New Transaction" />

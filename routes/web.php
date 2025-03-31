@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,12 +23,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
-    Route::get('/new', function() {
-        return Inertia::render('Transactions/NewTransaction');
-    });
-    Route::post('/new/{type}', function(Request $request, string $type) {
-        return $type;
-    });
+    Route::get('/', [TransactionsController::class, 'list']);
+    Route::get('/new', [TransactionsController::class, 'new']);
+    Route::post('/new/{type}', [TransactionsController::class, 'create']);
 });
 
 Route::middleware('auth')->group(function () {
