@@ -36,6 +36,7 @@ export type ExpenseOverview = {
 
 export type Transaction = {
     ref_id: string,
+    type: 'Income' | 'Expense' | 'Transfer',
     category: string,
     date: Date,
     amount: number,

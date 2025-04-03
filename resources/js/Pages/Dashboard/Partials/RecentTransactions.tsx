@@ -22,7 +22,7 @@ export default function RecentTransactions({
                             <TableRow key={transaction.ref_id}>
                                 <TableCell>{transaction.date.toString()}</TableCell>
                                 <TableCell>{transaction.category}</TableCell>
-                                <TableCell>{Intl.NumberFormat("en-US", { style: 'currency', 'currency': 'PHP' }).format(transaction.amount)}</TableCell>
+                                <TableCell><div className={(transaction.type == 'Expense' ? 'bg-red-900' : (transaction.type == 'Income' ? 'bg-green-900' : 'bg-blue-900')) + ' w-auto rounded-lg text-white p-2 text-center' }>{Intl.NumberFormat("en-US", { style: 'currency', 'currency': 'PHP' }).format(Math.abs(transaction.amount))}</div></TableCell>
                                 <TableCell><PrimaryButton>Details</PrimaryButton></TableCell>
                             </TableRow>
                         );

@@ -23,11 +23,20 @@ class DashboardController extends Controller
             if (!$transactions->isEmpty()) {
                 $balance += $account->transactions()->sum('amount');
                 $recentTransactions = $account->transactions()
-                    ->select('transactions.ref_id', 'transactions.amount', 'transactions.created_at as date', 'transaction_categories.name as category')
+                    ->select('transactions.ref_id', 'transactions.type', 'transactions.amount', 'transactions.created_at as date', 'transaction_categories.name as category')
                     ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
                     ->orderBy('created_at', 'desc')
                     ->take(5)
-                    ->get();
+                    ->get()
+                    ->map(function ($transaction) {
+                        return [
+                            'ref_id' => $transaction['ref_id'],
+                            'type' => $transaction['type']->name,
+                            'amount' => (int) $transaction['amount'],
+                            'date' => $transaction['date'],
+                            'category' => $transaction['category'],
+                        ];
+                    });
                 $expenseOverview = $account->transactions()
                     ->select(DB::raw('transaction_categories.name AS name, ABS(SUM(transactions.amount)) AS amount'))
                     ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
