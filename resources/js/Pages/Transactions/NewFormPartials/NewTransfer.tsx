@@ -9,7 +9,7 @@ import { router } from '@inertiajs/react';
 import { Account } from '../New';
 
 const formSchema = z.object({
-    from_account: z.string().uuid(),
+    account: z.string().uuid(),
     to_account: z.string().uuid(),
     amount: z.coerce.number({
         required_error: 'Amount is required',
@@ -38,7 +38,7 @@ export default function NewTransfer({ accounts }: { accounts: Account[] }) {
                     <div className='flex flex-row justify-between space-x-5'>
                     <FormField
                         control={form.control}
-                        name="from_account"
+                        name="account"
                         render={({ field }) => (
                             <FormItem className='w-full'>
                                 <FormLabel>From Account</FormLabel>

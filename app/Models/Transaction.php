@@ -14,6 +14,8 @@ class Transaction extends Model
 
     use HasUuids;
 
+    protected $fillable = [ 'amount', 'type', 'description' ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
