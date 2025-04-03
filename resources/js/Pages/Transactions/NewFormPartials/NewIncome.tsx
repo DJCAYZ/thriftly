@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Input } from '@/Components/ui/input';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Button } from '@/Components/ui/button';
 import { router } from '@inertiajs/react';
+import { Account, Category } from '../New';
 
 const formSchema = z.object({
     account: z.string().uuid(),
@@ -18,7 +18,7 @@ const formSchema = z.object({
     description: z.string().optional(),
 });
 
-export default function NewIncome() {
+export default function NewIncome({ accounts, categories }: { accounts: Account[], categories: Category[] }) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         mode: 'onChange',
@@ -26,18 +26,6 @@ export default function NewIncome() {
             amount: 0,
         },
     });
-
-    const accounts = [
-        { ref_id: '8f99d24f-fa80-40d4-99de-41177bebf852', 'title': 'Account 1', },
-        { ref_id: '1ccaa98d-f01e-4e69-82a6-510499952422', 'title': 'Account 2', },
-        { ref_id: 'dd09a6f8-9f47-4a78-a429-c8ee05093a9b', 'title': 'Account 3', },
-    ];
-
-    const categories = [
-        { ref_id: '108d4138-7619-43c7-83c6-c03fe414edf2', title: 'Food', },
-        { ref_id: '7936ed51-e07f-4ca3-a4bd-f443b879b2dc', title: 'Clothing', },
-        { ref_id: '173a2ed9-7b6b-40a6-9ad0-166ae86134d3', title: 'Transportation', },
-    ];
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         router.post('/transactions/new/income', values);
@@ -89,7 +77,7 @@ export default function NewIncome() {
                                             </FormControl>
                                             <SelectContent>
                                             {categories.map((category) => (
-                                                    <SelectItem key={category.ref_id} value={category.ref_id}>{category.title}</SelectItem>
+                                                    <SelectItem key={category.ref_id} value={category.ref_id}>{category.name}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
