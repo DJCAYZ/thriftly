@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaction_categories', function (Blueprint $table) {
             $table->id();
-            $table->uuid('ref_id');
+            $table->uuid('ref_id')->unique();
             $table->string('name');
             $table->string('type');
             
@@ -24,6 +24,8 @@ return new class extends Migration
 
         Schema::create('transfer_info', function (Blueprint $table) {
             $table->id();
+
+            $table->uuid('ref_id')->unique();
 
             $table->foreignId('from_account_id')->constrained(
                 table: 'accounts',
@@ -36,7 +38,7 @@ return new class extends Migration
             
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('ref_id');
+            $table->uuid('ref_id')->unique();
             $table->string('type');
             $table->decimal('amount', total: 8, places: 2);
             $table->string('description')->nullable();
