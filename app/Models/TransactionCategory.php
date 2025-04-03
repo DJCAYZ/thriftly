@@ -16,6 +16,8 @@ class TransactionCategory extends Model
     protected $table = 'transaction_categories';
     public $timestamps = false;
 
+    protected $fillable = ['type', 'user_id', 'name'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
