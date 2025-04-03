@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -27,6 +28,21 @@ class DashboardController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->take(5)
                     ->get();
+                $expenseOverview = $account->transactions()
+                    ->select(DB::raw('transaction_categories.name AS name, ABS(SUM(transactions.amount)) AS amount'))
+                    ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+                    ->where([
+                        ['transactions.type', '=', 'Expense'],
+                        ['transactions.created_at', '>=', 'UNIX_TIMESTAMP(DATE(NOW() - INTERVAL 30 DAY))'],
+                    ])
+                    ->groupBy('transactions.category_id')
+                    ->get()
+                    ->map(function ($overview) {
+                        return [
+                            'title' => $overview['name'],
+                            'amount' => (int) $overview['amount'],
+                        ];
+                    });
             }
 
             return [
