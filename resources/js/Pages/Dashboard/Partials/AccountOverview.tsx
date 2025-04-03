@@ -15,7 +15,7 @@ export default function AccountOverview({
     const {balance, expenseOverview, recentTransactions} = account;
 
     return (
-        <div className="p-5">
+        <div>
             <div className="flex flex-row mb-5 items-center justify-between">
                 <div className="flex flex-col">
                     <p className="text-sm text-gray-900">ACCOUNT BALANCE</p>

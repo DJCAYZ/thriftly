@@ -8,9 +8,10 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Co
 export default function Dashboard({ accounts }: PageProps<{ accounts: Account[] }>) {
     
     return (
-        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="Dashboard" />
-            <Tabs defaultValue={accounts[0].ref_id}>
+            {accounts.length > 0 ? (
+                <Tabs defaultValue={accounts[0].ref_id}>
                 <TabsList className="w-full justify-around">
                     {accounts.map((account) => {
                         return (
@@ -26,6 +27,9 @@ export default function Dashboard({ accounts }: PageProps<{ accounts: Account[] 
                     )
                 })}
             </Tabs>
+            ) : (
+                <h1>Create an account to get started.</h1>
+            )}
     </div>
     );
 }
