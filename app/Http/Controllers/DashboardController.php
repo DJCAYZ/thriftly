@@ -45,6 +45,7 @@ class DashboardController extends Controller
                         ['transactions.created_at', '>=', 'UNIX_TIMESTAMP(DATE(NOW() - INTERVAL 30 DAY))'],
                     ])
                     ->groupBy('transactions.category_id')
+                    ->orderBy('amount', 'desc')
                     ->get()
                     ->map(function ($overview) {
                         return [
