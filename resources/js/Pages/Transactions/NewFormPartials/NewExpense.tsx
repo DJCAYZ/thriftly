@@ -17,6 +17,7 @@ const formSchema = z.object({
     }).positive("Amount must be a positive number"),
     category: z.string().uuid(),
     description: z.string().optional(),
+    type: z.literal('expense'),
 });
 
 export default function NewExpense({ accounts, categories }: { accounts: Account[], categories: Category[] }) {
@@ -25,17 +26,28 @@ export default function NewExpense({ accounts, categories }: { accounts: Account
         mode: 'onChange',
         defaultValues: {
             amount: 0,
+            type: 'expense',
         },
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        router.post('/transactions/new/expense', values);
+        router.post('/transactions/new', values);
     }
 
     return (
         <div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <FormField
+                        control={form.control}
+                        name="type"
+                        render={({ field }) => (
+                            <FormItem className='hidden'>
+                                <Input type='hidden' {...field} />
+                            </FormItem>
+                        )}
+                    />
+
                     <div className='flex flex-row space-x-5'>
                         <FormField
                             control={form.control}

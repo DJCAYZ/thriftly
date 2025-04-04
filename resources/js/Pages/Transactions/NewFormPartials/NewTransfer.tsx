@@ -16,7 +16,11 @@ const formSchema = z.object({
         invalid_type_error: 'Amount must be a number',
     }).positive("Amount must be a positive number"),
     description: z.string().optional(),
-});
+    type: z.literal('transfer'),
+}).refine(({ account, to_account }) => account !== to_account, {
+    message: 'From Account and To Account are the same',
+    path: ['to_account'],
+}); 
 
 export default function NewTransfer({ accounts }: { accounts: Account[] }) {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -24,17 +28,36 @@ export default function NewTransfer({ accounts }: { accounts: Account[] }) {
         mode: 'onChange',
         defaultValues: {
             amount: 0,
+            type: 'transfer',
         },
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        router.post('/transactions/new/transfer', values);
+        router.post('/transactions/new', values, {
+            onError({ account = '', to_account = '', amount = '', description = '', type = '' }) {
+                if (account) form.setError('account', { message: account });
+                if (to_account) form.setError('to_account', { message: to_account });
+                if (amount) form.setError('amount', { message: amount });
+                if (description) form.setError('description', { message: description });
+                if (type) form.setError('type', { message: type });
+            },
+        });
     }
 
     return (
         <div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                    <FormField
+                        control={form.control}
+                        name="type"
+                        render={({ field }) => (
+                            <FormItem className='hidden'>
+                                <Input type='hidden' {...field} />
+                            </FormItem>
+                        )}
+                    />
+                    
                     <div className='flex flex-row justify-between space-x-5'>
                     <FormField
                         control={form.control}

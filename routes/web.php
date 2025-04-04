@@ -22,7 +22,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
     Route::get('/', [TransactionsController::class, 'list']);
     Route::get('/new', [TransactionsController::class, 'new']);
-    Route::post('/new/{type}', [TransactionsController::class, 'create']);
+    Route::post('/new', [TransactionsController::class, 'create']);
 });
 
 Route::middleware('auth')->group(function () {

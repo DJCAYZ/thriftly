@@ -52,7 +52,7 @@ return new class extends Migration
                 table: 'accounts',
             );
 
-            $table->foreignId('category_id')->constrained(
+            $table->foreignId('category_id')->nullable()->constrained(
                 table:'transaction_categories',
             );
 
