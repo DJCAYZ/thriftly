@@ -55,8 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(GoogleUser::class, 'user_id');
     }
 
+    
     public function accounts(): HasMany {
         return $this->hasMany(Account::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'user_id');
     }
     
     public function categories(): HasMany

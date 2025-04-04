@@ -1,21 +1,22 @@
 import DataTable from "@/Components/DataTable";
 import { Button } from "@/Components/ui/button";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Transaction } from "@/types";
+import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/Components/ui/pagination';
 import { Input } from "@/Components/ui/input";
 import { Plus, Search } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 
 const columns: ColumnDef<Transaction>[] = [
 {
-        accessorKey: 'date',
+        accessorKey: 'created_at',
         header: 'Date',
         cell: ({ row }) => {
-            const date = row.getValue('date') as Date;
+            const date = Date.parse(row.getValue('created_at'));
             const formatted = new Intl.DateTimeFormat('en-US', {
                 dateStyle: 'short',
                 timeStyle: 'short',
@@ -23,6 +24,10 @@ const columns: ColumnDef<Transaction>[] = [
 
             return <div className="font-medium">{formatted}</div>
         }
+    },
+    {
+        accessorKey: 'type',
+        header: 'Type',
     },
     {
         accessorKey: 'category',
@@ -47,72 +52,29 @@ const columns: ColumnDef<Transaction>[] = [
     }
 ];
 
-const data = [
-    {
-        ref_id: '4187ba19-a229-4932-91b7-d001e0368b47',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '737dd597-ca86-4969-bf1a-e662d93dc9dd',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '3e869ac2-ce8b-44de-9c3f-652ca63eb50f',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-    {
-        ref_id: '0a7737ac-735f-4936-811d-7efb5aec1af2',
-        date: new Date('March 30, 2025 12:00:00'),
-        category: 'Food',
-        amount: 100,
-    },
-];
+export type Transaction = {
+    ref_id: string,
+    type: 'Income' | 'Expense',
+    amount: number,
+    category: string,
+    description?: string,
+    created_at: string,
+}
 
+interface TransactionPaginator {
+    data: Transaction[],
+    path: string,
+    
+    per_page: number,
+    
+    prev_cursor: string | null,
+    next_cursor: string | null,
+    
+    prev_page_url: string | null,
+    next_page_url: string | null,
+}
 
-
-export default function List() {
+export default function List({ transactions }: PageProps<{ transactions: TransactionPaginator }>) {
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="Transactions" />
@@ -126,41 +88,31 @@ export default function List() {
             </div>
 
             <div className="mt-5">
-                <DataTable columns={columns} data={data} />
+                <DataTable columns={columns} data={transactions.data} />
             </div>
             
-            <Pagination className='mt-5'>
-                <PaginationContent>
-                    <PaginationItem>
-                        <Link href="#">
-                            <PaginationPrevious />
+            <div className="mt-5 w-full flex flex-row justify-end">
+                <div className="w-3/12 flex flex-row space-x-2">
+                    {transactions.prev_page_url ? (
+                        <Link className="w-full" href={transactions.prev_page_url}>
+                            <PrimaryButton className="w-full">Previous</PrimaryButton>
                         </Link>
-                    </PaginationItem>
-                    <PaginationItem>
-                    <Link href="#">
-                            <PaginationLink isActive>1</PaginationLink>
+                    ) : (
+                        <div className="w-full">
+                            <PrimaryButton disabled={true} className="w-full">Previous</PrimaryButton>
+                        </div>
+                    )}
+                    {transactions.next_page_url ? (
+                        <Link className='w-full' href={transactions.next_page_url}>
+                            <PrimaryButton className="w-full">Next</PrimaryButton>
                         </Link>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <Link href="#">
-                            <PaginationLink>2</PaginationLink>
-                        </Link>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <Link href="#">
-                            <PaginationLink>9</PaginationLink>
-                        </Link>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <Link href="#">
-                            <PaginationNext />
-                        </Link>
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+                    ) : (
+                        <div className="w-full">
+                            <PrimaryButton disabled={true} className="w-full">Next</PrimaryButton>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

@@ -10,6 +10,7 @@ use App\Models\TransferInfo;
 use App\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -17,7 +18,14 @@ use Inertia\Inertia;
 class TransactionsController extends Controller
 {
     public function list(Request $request) {
-        return Inertia::render('Transactions/List');
+        return Inertia::render('Transactions/List', [
+            'transactions' => DB::table('transactions')
+                ->select('transactions.ref_id', 'transactions.amount', 'transactions.type', 'transaction_categories.name as category', 'transactions.created_at')
+                ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+                ->where('transactions.type', '<>', TransactionType::Transfer)
+                ->orderBy('transactions.created_at', 'desc')
+                ->cursorPaginate(10),
+        ]);
     }
 
     public function new(Request $request) {
