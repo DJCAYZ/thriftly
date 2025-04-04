@@ -107,7 +107,7 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
                             ) : i == a.length - 1 ? (
                                 <PaginationNext href={link.url} />
                             ) : (
-                                <PaginationLink href={link.url}>{link.label}</PaginationLink>
+                                <PaginationLink isActive={link.active} href={link.url}>{link.label}</PaginationLink>
                             )}
                         </PaginationItem>
                     ))}
