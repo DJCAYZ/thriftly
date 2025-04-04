@@ -9,6 +9,7 @@ import { Input } from "@/Components/ui/input";
 import { Plus, Search } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { link } from "fs";
 
 
 const columns: ColumnDef<Transaction>[] = [
@@ -48,7 +49,7 @@ const columns: ColumnDef<Transaction>[] = [
     },
     {
         id: 'actions',
-        cell: ({ row }) => <Button>View</Button>
+        cell: () => <PrimaryButton>View</PrimaryButton>
     }
 ];
 
@@ -67,11 +68,17 @@ interface TransactionPaginator {
     
     per_page: number,
     
-    prev_cursor: string | null,
-    next_cursor: string | null,
+    links: {
+        active: boolean,
+        label: string,
+        url: string,
+    }[],
     
-    prev_page_url: string | null,
-    next_page_url: string | null,
+    // prev_cursor: string | null,
+    // next_cursor: string | null,
+    
+    // prev_page_url: string | null,
+    // next_page_url: string | null,
 }
 
 export default function List({ transactions }: PageProps<{ transactions: TransactionPaginator }>) {
@@ -81,38 +88,31 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
 
             <div className="flex flex-row space-x-2">
                 <Input className="flex-[6]" placeholder="Search" />
-                <Button className="flex-1"><Search /> Search</Button>
+                <PrimaryButton className="flex-1"><div className="flex flex-row items-center justify-around"><Search /> Search</div></PrimaryButton>
                 <Link className="flex-1" href="/transactions/new">
-                    <Button className="w-full"><Plus /> New</Button>
+                    <PrimaryButton className="w-full"><div className="flex flex-row items-center justify-around"><Plus /> New</div></PrimaryButton>
                 </Link>
             </div>
 
             <div className="mt-5">
                 <DataTable columns={columns} data={transactions.data} />
             </div>
-            
-            <div className="mt-5 w-full flex flex-row justify-end">
-                <div className="w-3/12 flex flex-row space-x-2">
-                    {transactions.prev_page_url ? (
-                        <Link className="w-full" href={transactions.prev_page_url}>
-                            <PrimaryButton className="w-full">Previous</PrimaryButton>
-                        </Link>
-                    ) : (
-                        <div className="w-full">
-                            <PrimaryButton disabled={true} className="w-full">Previous</PrimaryButton>
-                        </div>
-                    )}
-                    {transactions.next_page_url ? (
-                        <Link className='w-full' href={transactions.next_page_url}>
-                            <PrimaryButton className="w-full">Next</PrimaryButton>
-                        </Link>
-                    ) : (
-                        <div className="w-full">
-                            <PrimaryButton disabled={true} className="w-full">Next</PrimaryButton>
-                        </div>
-                    )}
-                </div>
-            </div>
+
+            <Pagination className="mt-2  ">
+                <PaginationContent>
+                    {transactions.links.map((link, i, a) => (
+                        <PaginationItem>
+                            {i == 0 ? (
+                                <PaginationPrevious href={link.url} />
+                            ) : i == a.length - 1 ? (
+                                <PaginationNext href={link.url} />
+                            ) : (
+                                <PaginationLink href={link.url}>{link.label}</PaginationLink>
+                            )}
+                        </PaginationItem>
+                    ))}
+                </PaginationContent>
+            </Pagination>
         </div>
     );
 }

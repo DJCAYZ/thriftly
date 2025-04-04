@@ -24,7 +24,7 @@ class TransactionsController extends Controller
                 ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
                 ->where('transactions.type', '<>', TransactionType::Transfer)
                 ->orderBy('transactions.created_at', 'desc')
-                ->cursorPaginate(10),
+                ->paginate(10),
         ]);
     }
 
