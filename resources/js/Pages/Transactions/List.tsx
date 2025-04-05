@@ -12,7 +12,11 @@ import PrimaryButton from "@/Components/PrimaryButton";
 
 
 const columns: ColumnDef<Transaction>[] = [
-{
+    {
+        accessorKey: 'ref_id',
+        header: 'ID',
+    },
+    {
         accessorKey: 'created_at',
         header: 'Date',
         cell: ({ row }) => {
@@ -26,12 +30,12 @@ const columns: ColumnDef<Transaction>[] = [
         }
     },
     {
-        accessorKey: 'account',
-        header: 'Account',
-    },
-    {
         accessorKey: 'type',
         header: 'Type',
+    },
+    {
+        accessorKey: 'account',
+        header: 'Account',
     },
     {
         accessorKey: 'category',
@@ -52,7 +56,11 @@ const columns: ColumnDef<Transaction>[] = [
     },
     {
         id: 'actions',
-        cell: () => <PrimaryButton>View</PrimaryButton>
+        cell: ({ row }) => (
+            <Link className="w-full" href={`/transactions/${row.getValue("ref_id")}`}>
+                <PrimaryButton className="w-full">View</PrimaryButton>
+            </Link>
+        )
     }
 ];
 
@@ -84,9 +92,9 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="Transactions" />
 
-            <div className="flex flex-row space-x-2">
+            <div className="flex flex-row space-x-2 items-center">
                 <Input className="flex-[6]" placeholder="Search" />
-                <PrimaryButton className="flex-1"><div className="flex flex-row items-center justify-around"><Search /> Search</div></PrimaryButton>
+                <PrimaryButton className="flex-1"><div className="flex flex-row items-center justify-around p-0"><Search /> Search</div></PrimaryButton>
                 <Link className="flex-1" href="/transactions/new">
                     <PrimaryButton className="w-full"><div className="flex flex-row items-center justify-around"><Plus /> New</div></PrimaryButton>
                 </Link>

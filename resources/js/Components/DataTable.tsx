@@ -1,5 +1,6 @@
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
@@ -10,9 +11,22 @@ export default function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
+    const [ columnVisibility, setColumnVisibility ] = useState({
+        ref_id: false,
+        created_at: true,
+        account: true,
+        category: true,
+        amount: true,
+        actions: true,
+    });
+
     const table = useReactTable({
         data,
         columns,
+        state: {
+            columnVisibility,
+        },
+        onColumnVisibilityChange: setColumnVisibility,
         getCoreRowModel: getCoreRowModel(),
     });
 
