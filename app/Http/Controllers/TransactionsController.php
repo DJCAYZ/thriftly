@@ -20,8 +20,9 @@ class TransactionsController extends Controller
     public function list(Request $request) {
         return Inertia::render('Transactions/List', [
             'transactions' => DB::table('transactions')
-                ->select('transactions.ref_id', 'transactions.amount', 'transactions.type', 'transaction_categories.name as category', 'transactions.created_at')
+                ->select('transactions.ref_id', 'transactions.amount', 'transactions.type', 'accounts.title as account', 'transaction_categories.name as category', 'transactions.created_at')
                 ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+                ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
                 ->where('transactions.type', '<>', TransactionType::Transfer)
                 ->orderBy('transactions.created_at', 'desc')
                 ->paginate(10),

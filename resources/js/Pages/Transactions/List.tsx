@@ -27,6 +27,10 @@ const columns: ColumnDef<Transaction>[] = [
         }
     },
     {
+        accessorKey: 'account',
+        header: 'Account',
+    },
+    {
         accessorKey: 'type',
         header: 'Type',
     },
@@ -42,7 +46,7 @@ const columns: ColumnDef<Transaction>[] = [
             const formatted = new Intl.NumberFormat('en-US', {
                 style: "currency",
                 currency: "PHP", //TODO: connect to user's preferred currency;;
-            }).format(amount);
+            }).format(Math.abs(amount));
 
             return <div className="text-right font-medium">{formatted}</div>
         }
@@ -56,6 +60,7 @@ const columns: ColumnDef<Transaction>[] = [
 export type Transaction = {
     ref_id: string,
     type: 'Income' | 'Expense',
+    account: string,
     amount: number,
     category: string,
     description?: string,
@@ -73,12 +78,6 @@ interface TransactionPaginator {
         label: string,
         url: string,
     }[],
-    
-    // prev_cursor: string | null,
-    // next_cursor: string | null,
-    
-    // prev_page_url: string | null,
-    // next_page_url: string | null,
 }
 
 export default function List({ transactions }: PageProps<{ transactions: TransactionPaginator }>) {
@@ -98,7 +97,7 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
                 <DataTable columns={columns} data={transactions.data} />
             </div>
 
-            <Pagination className="mt-2  ">
+            <Pagination className="mt-2">
                 <PaginationContent>
                     {transactions.links.map((link, i, a) => (
                         <PaginationItem>
