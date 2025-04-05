@@ -9,7 +9,6 @@ import { Input } from "@/Components/ui/input";
 import { Plus, Search } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { link } from "fs";
 
 
 const columns: ColumnDef<Transaction>[] = [
@@ -23,7 +22,7 @@ const columns: ColumnDef<Transaction>[] = [
                 timeStyle: 'short',
             }).format(date);
 
-            return <div className="font-medium">{formatted}</div>
+            return <div>{formatted}</div>
         }
     },
     {
@@ -48,7 +47,7 @@ const columns: ColumnDef<Transaction>[] = [
                 currency: "PHP", //TODO: connect to user's preferred currency;;
             }).format(Math.abs(amount));
 
-            return <div className="text-right font-medium">{formatted}</div>
+            return <div className="text-right">{formatted}</div>
         }
     },
     {
