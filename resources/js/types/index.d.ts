@@ -24,9 +24,9 @@ export type PageProps<
 export interface Account {
     ref_id: string,
     title: string,
-    balance?: number,
-    expenseOverview?: ExpenseOverview[],
-    recentTransactions?: Transaction[],
+    balance: number,
+    expenseOverview: ExpenseOverview[],
+    recentTransactions: Transaction[],
 };
 
 export type ExpenseOverview = {

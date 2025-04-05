@@ -13,11 +13,6 @@ export default function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [ columnVisibility, setColumnVisibility ] = useState({
         ref_id: false,
-        created_at: true,
-        account: true,
-        category: true,
-        amount: true,
-        actions: true,
     });
 
     const table = useReactTable({
