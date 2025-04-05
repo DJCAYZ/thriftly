@@ -29,6 +29,29 @@ class TransactionsController extends Controller
         ]);
     }
 
+    public function show(Request $request, string $uuid) {
+        $transaction = Transaction::firstWhere('ref_id', $uuid);
+        $account = $transaction->account;
+        $category = $transaction->category;
+        return Inertia::render('Transactions/Show', [
+            'transaction' => [
+                'ref_id' => $transaction->ref_id,
+                'amount' => $transaction->amount,
+                'type' => $transaction->type->name,
+                'description' => $transaction->description,
+                'created_at' => $transaction->created_at,
+                'account' => [
+                    'ref_id' => $account->ref_id,
+                    'title' => $account->title,
+                ],
+                'category' => [
+                    'ref_id' => $category->ref_id,
+                    'name' => $category->name,
+                ],
+            ],
+        ]);
+    }
+
     public function new(Request $request) {
         $user = Auth::user();
 
