@@ -52,6 +52,15 @@ class TransactionsController extends Controller
         ]);
     }
 
+    public function delete(Request $request, string $uuid) {
+        $transaction = Transaction::firstWhere('ref_id', $uuid);
+        Gate::authorize('delete', $transaction);
+
+        $transaction->delete();
+        
+        return redirect()->intended('/transactions');
+    }
+
     public function new(Request $request) {
         $user = Auth::user();
 

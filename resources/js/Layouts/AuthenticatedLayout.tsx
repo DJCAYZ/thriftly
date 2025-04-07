@@ -4,6 +4,7 @@ import { PropsWithChildren, ReactNode, useState } from 'react';
 import backgroundImage from '../../img/bg.png';
 import { SidebarProvider, SidebarTrigger } from '@/Components/ui/sidebar';
 import { AppSidebar } from '@/Components/AppSidebar';
+import { Toaster } from '@/Components/ui/toaster';
 
 
 export default function Authenticated({
@@ -34,6 +35,7 @@ export default function Authenticated({
                     </div>
                 </main>
             </SidebarProvider>
+            <Toaster />
         </div>
     );
 }

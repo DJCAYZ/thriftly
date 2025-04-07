@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
+use App\Models\Transaction;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,9 @@ Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function 
     Route::get('/', [TransactionsController::class, 'list']);
     Route::get('/new', [TransactionsController::class, 'new']);
     Route::post('/new', [TransactionsController::class, 'create']);
+    
     Route::get('/{uuid}', [TransactionsController::class, 'show']);
+    Route::delete('/{uuid}', [TransactionsController::class, 'delete']);
 });
 
 Route::middleware('auth')->group(function () {
