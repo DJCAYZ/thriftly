@@ -68,7 +68,7 @@ class TransactionsController extends Controller
 
         $transaction->delete();
         
-        return redirect()->intended('/transactions');
+        return redirect('/transactions');
     }
 
     public function new(Request $request) {
