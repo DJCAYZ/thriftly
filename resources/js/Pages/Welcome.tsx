@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import PrimaryButton from '@/Components/PrimaryButton';
 import backgroundImage from '../../img/bg.png';
@@ -13,6 +13,7 @@ export default function Welcome({
         <div className='flex flex-col min-h-screen bg-center bg-cover' style={{
             backgroundImage: `url(${backgroundImage})`,
         }}>
+            <Head title='Welcome' />
             <header className='flex flex-row justify-between bg-white w-screen px-6 py-2'>
                 <ApplicationLogo className='h-20' />
                 {auth.user ? (
