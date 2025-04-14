@@ -27,7 +27,7 @@ export default function ShowTransferInfo({ transferInfo }: PageProps<{ transferI
             <Head title={`Transfer ${short_uuid}`} />
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row items-baseline space-x-2 text-lg mb-2">
-                    <h1>Transaction</h1>
+                    <h1>Transfer Transaction</h1>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger onClick={() => {
@@ -97,15 +97,12 @@ export default function ShowTransferInfo({ transferInfo }: PageProps<{ transferI
                 </div>
             </div>
 
-            <div className="mt-2 p-3 border border-black border-solid rounded-lg">
-                {transferInfo.fromTransaction.description && (
-                    <div>
-                        <p className="text-gray-500">Description</p>
-                        <p>{transferInfo.fromTransaction.description}</p>
-                        <Separator className="my-2" />
-                    </div>
-                )}
-            </div>
+            {transferInfo.fromTransaction.description && (
+                <div className="mt-2 p-3 border border-black border-solid rounded-lg">
+                    <p className="text-gray-500">Description</p>
+                    <p>{transferInfo.fromTransaction.description}</p>
+                </div>
+            )}
         </div>
     );
 }
