@@ -91,7 +91,7 @@ export default function Show({
                     </p>
                     <p className="text-gray-500">Amount</p>
                 </div>
-                <p className={(transaction.type === 'Expense' ? 'bg-red-900' : transaction.type === 'Income' ? 'bg-green-900' : 'bg-blue-900') + " text-white p-2 rounded-lg"}>{transaction.type}</p>
+                <p className={(transaction.type === 'Expense' ? 'bg-red-900' : 'bg-green-900') + " text-white p-2 rounded-lg"}>{transaction.type}</p>
             </div>
 
             <div className="mt-2 p-3 border border-black border-solid rounded-lg">
