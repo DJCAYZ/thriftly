@@ -1,27 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import NewIncome from "./NewFormPartials/NewIncome";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import NewExpense from "./NewFormPartials/NewExpense";
 import NewTransfer from "./NewFormPartials/NewTransfer";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
-import { Account, PageProps } from "@/types";
+import { Account, Category, PageProps } from "@/types";
 
-export type Category = {
-    ref_id: string,
-    name: string,
-};
-
-export default function New({
-    accounts,
-    categories,
-}: PageProps<{
-    accounts: Account[],
-    categories: {
-        income: Category[],
-        expense: Category[],
-    },
-}>) {
+export default function New() {
+    const { categories, accounts } = usePage().props;
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="New Transaction" />

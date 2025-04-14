@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Transaction;
 use App\Models\User;
 use App\TransactionType;
 use Illuminate\Http\Request;
@@ -20,7 +21,9 @@ class DashboardController extends Controller
         
         $accounts_overview = $accounts->reduce(function (array $info, Account $account) {
             $info[$account->ref_id] = [
-                'recentTransactions' => $account->transactions()
+                'recentTransactions' => Transaction::with('category')
+                    ->where('user_id', $account->user_id)
+                    ->where('account_id', $account->id)
                     ->orderBy('created_at', 'DESC')
                     ->take(5)
                     ->get()

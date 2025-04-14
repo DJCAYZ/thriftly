@@ -13,7 +13,6 @@ class TransferInfo extends Model
     use HasUuids;
 
     protected $table = 'transfer_info';
-    public $timestamps = false;
 
     protected $hidden = [ 'id', 'to_account_id', 'from_account_id' ];
 
@@ -25,6 +24,11 @@ class TransferInfo extends Model
     public function fromAccount(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'from_account_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function transactions(): HasMany

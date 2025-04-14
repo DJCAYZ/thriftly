@@ -1,16 +1,15 @@
 import DataTable from "@/Components/DataTable";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
+import { Input } from "@/Components/ui/input";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageProps, Transaction } from "@/types";
+import { PageProps, TransferInfo } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/Components/ui/pagination';
-import { Input } from "@/Components/ui/input";
-import { Plus, Search } from "lucide-react";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
-import PrimaryButton from "@/Components/PrimaryButton";
+import { ArrowRight, Plus, Search } from "lucide-react";
 
-
-const columns: ColumnDef<Transaction>[] = [
+const columns: ColumnDef<TransferInfo>[] = [
     {
         accessorKey: 'ref_id',
         header: 'ID',
@@ -29,16 +28,18 @@ const columns: ColumnDef<Transaction>[] = [
         }
     },
     {
-        accessorKey: 'type',
-        header: 'Type',
+        accessorKey: 'from_account.title',
+        header: 'From',
     },
     {
-        accessorKey: 'account.title',
-        header: 'Account',
+        id: 'arrow',
+        cell: () => {
+            return <ArrowRight />
+        }
     },
     {
-        accessorKey: 'category.name',
-        header: 'Category',
+        accessorKey: 'to_account.title',
+        header: 'To',
     },
     {
         accessorKey: 'amount',
@@ -56,15 +57,15 @@ const columns: ColumnDef<Transaction>[] = [
     {
         id: 'actions',
         cell: ({ row }) => (
-            <Link className="w-full" href={`/transactions/${row.getValue("ref_id")}`}>
+            <Link className="w-full" href={`/transactions/transfers/${row.getValue("ref_id")}`}>
                 <PrimaryButton className="w-full">View</PrimaryButton>
             </Link>
         )
     }
 ];
 
-interface TransactionPaginator {
-    data: Transaction[],
+interface TransferInfoPaginator {
+    data: TransferInfo[],
     path: string,
     
     per_page: number,
@@ -76,7 +77,7 @@ interface TransactionPaginator {
     }[],
 }
 
-export default function List({ transactions }: PageProps<{ transactions: TransactionPaginator }>) {
+export default function ListTransferInfo({ transferInfo }: PageProps<{ transferInfo: TransferInfoPaginator }>) {
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="Transactions" />
@@ -90,12 +91,12 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
             </div>
 
             <div className="mt-5">
-                <DataTable columns={columns} data={transactions.data} />
+                <DataTable columns={columns} data={transferInfo.data} />
             </div>
 
             <Pagination className="mt-2">
                 <PaginationContent>
-                    {transactions.links.map((link, i, a) => (
+                    {transferInfo.links.map((link, i, a) => (
                         <PaginationItem>
                             {i == 0 ? (
                                 <PaginationPrevious href={link.url} />
@@ -112,11 +113,17 @@ export default function List({ transactions }: PageProps<{ transactions: Transac
     );
 }
 
-List.layout = (page: JSX.Element) => <Authenticated children={page} title={
+ListTransferInfo.layout = (page: JSX.Element) => <Authenticated children={page} title={
     <Breadcrumb>
         <BreadcrumbList>
             <BreadcrumbItem>
-                <BreadcrumbPage>Transactions</BreadcrumbPage>
+                <Link href="/transactions">
+                    <BreadcrumbLink>Transactions</BreadcrumbLink>
+                </Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+                <BreadcrumbPage>Transfer Transactions</BreadcrumbPage>
             </BreadcrumbItem>
         </BreadcrumbList>
     </Breadcrumb>

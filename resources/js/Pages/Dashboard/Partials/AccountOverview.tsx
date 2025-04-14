@@ -49,14 +49,16 @@ export default function AccountOverview({
                     </div>
                 </div>
             </>
-            ) : <p className="mt-5">No transactions found</p>}
-            <Separator />
+            ) : <p className="mt-5">No expense transactions found</p>}
+            <Separator className="mt-5" />
             <div className="flex flex-col pt-2">
                 <div className="flex flex-row justify-between">
                     <h1 className="">Recent Transactions</h1>
-                    <PrimaryButton>All Transactions</PrimaryButton>
+                    <Link href="/transactions">
+                        <PrimaryButton>All Transactions</PrimaryButton>
+                    </Link>
                 </div>
-                <div>
+                <div className="mt-5">
                     <RecentTransactions transactions={recentTransactions} />
                 </div>
             </div>

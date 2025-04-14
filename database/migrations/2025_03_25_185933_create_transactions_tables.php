@@ -26,6 +26,7 @@ return new class extends Migration
             $table->id();
 
             $table->uuid('ref_id')->unique();
+            $table->decimal('amount');
 
             $table->foreignId('from_account_id')->constrained(
                 table: 'accounts',
@@ -34,6 +35,11 @@ return new class extends Migration
             $table->foreignId('to_account_id')->constrained(
                 table: 'accounts',
             );
+
+            $table->foreignId('user_id')->constrained(
+                table: 'users',
+            );
+            $table->timestamps();
         });
             
         Schema::create('transactions', function (Blueprint $table) {

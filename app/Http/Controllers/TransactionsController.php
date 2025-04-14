@@ -18,14 +18,14 @@ use Inertia\Inertia;
 class TransactionsController extends Controller
 {
     public function list(Request $request) {
+        $transactions = Transaction::with(['account', 'category'])
+            ->where([
+                ['user_id', '=', $request->user()->id],
+                ['type', '<>', TransactionType::Transfer]
+            ]);
+
         return Inertia::render('Transactions/List', [
-            'transactions' => DB::table('transactions')
-                ->select('transactions.ref_id', 'transactions.amount', 'transactions.type', 'accounts.title as account', 'transaction_categories.name as category', 'transactions.created_at')
-                ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
-                ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
-                ->where('transactions.type', '<>', TransactionType::Transfer)
-                ->orderBy('transactions.created_at', 'desc')
-                ->paginate(10),
+            'transactions' => $transactions->paginate(10),
         ]);
     }
 
@@ -71,23 +71,7 @@ class TransactionsController extends Controller
     }
 
     public function new(Request $request) {
-        $user = Auth::user();
-
-        return Inertia::render('Transactions/New', [
-            'accounts' => $user->accounts()->select('ref_id', 'title')->get(),
-            'categories' => [
-                'income' => TransactionCategory::select('ref_id', 'name')
-                    ->where('type', CategoryType::Income)
-                    ->whereNull('user_id')
-                    ->orWhere('user_id', $user->id)
-                    ->get(),
-                'expense' => TransactionCategory::select('ref_id', 'name')
-                    ->where('type', CategoryType::Expense)
-                    ->whereNull('user_id')
-                    ->orWhere('user_id', $user->id)
-                    ->get(),
-            ],
-        ]);
+        return Inertia::render('Transactions/New');
     }
 
     public function create(Request $request) {
@@ -120,7 +104,10 @@ class TransactionsController extends Controller
                 'amount' => $request->input('amount'),
                 'description' => $request->input('description'),
             ]);
+            
+            $transferInfo->amount = $request->input('amount');
 
+            $transferInfo->user()->associate($request->user());
             $transferInfo->fromAccount()->associate($account);
             $transferInfo->toAccount()->associate($toAccount);
             $transferInfo->save();
@@ -135,6 +122,8 @@ class TransactionsController extends Controller
 
             $fromTransaction->save();
             $toTransaction->save();
+
+            return redirect("/transactions/transfers/" .  $transferInfo->ref_id);
         } else {
             $category = TransactionCategory::firstWhere('ref_id', $request->input('category'));
             $transaction = new Transaction();
@@ -150,9 +139,9 @@ class TransactionsController extends Controller
     
             $transaction->save();
 
+            return redirect("/transactions/" .  $transaction->ref_id);
         }
         
 
-        return redirect('/transactions');
     }
 }

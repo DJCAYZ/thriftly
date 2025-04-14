@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\TransferInfo;
+use App\TransactionType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TransferInfoController extends Controller
 {
     public function list(Request $request) {
-        // list page
+        $transferInfo = TransferInfo::with(['fromAccount', 'toAccount'])
+            ->where([
+                ['user_id', '=', $request->user()->id],
+            ]);
+
+        return Inertia::render('Transactions/Transfers/ListTransferInfo', [
+            'transferInfo' => $transferInfo->paginate(10),
+        ]);
     }
 
     public function show(Request $request, string $uuid) {

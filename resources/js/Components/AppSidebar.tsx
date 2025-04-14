@@ -1,4 +1,4 @@
-import { ChartColumn, ChevronUp, LayoutDashboard, Library, User2, BookMarked } from "lucide-react"
+import { ChartColumn, ChevronUp, LayoutDashboard, Library, User2, BookMarked, LucideIcon, ChevronDown, ChevronRight, ArrowRightLeft } from "lucide-react"
 
 import {
   Sidebar,
@@ -6,6 +6,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -14,9 +15,22 @@ import {
 import { Link, usePage } from '@inertiajs/react';
 import ApplicationLogo from "./ApplicationLogo";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/Components/ui/dropdown-menu";
+import { MenuItem } from "@headlessui/react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+
+interface MenuItem {
+    title: string,
+    url: string,
+    icon : LucideIcon,
+}
+
+interface MenuItemGroup {
+    title: string,
+    subitems: MenuItem[],
+}
 
 // Menu items.
-const items = [
+const items: Array<MenuItem | MenuItemGroup> = [
   {
     title: "Dashboard",
     url: "/dashboard",
@@ -29,20 +43,29 @@ const items = [
   },
   {
     title: "Records",
-    url: "/transactions",
-    icon: Library,
+    subitems: [
+        {
+            title: "Transactions",
+            url: "/transactions",
+            icon: Library,
+        },
+        {
+            title: "Transfers",
+            url: "/transactions/transfers",
+            icon: ArrowRightLeft,
+        },
+    ],
   },
   {
     title: "Statistics",
     url: "/statistics",
     icon: ChartColumn,
-    disabled: true,
   },
 ];
 
 export function AppSidebar() {
 
-    const { url, component, props } = usePage();
+    const { url, props } = usePage();
 
     return (
         <Sidebar className="opacity-90">
@@ -53,16 +76,51 @@ export function AppSidebar() {
                 <SidebarGroup>
                 <SidebarGroupContent>
                     <SidebarMenu>
-                    {items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton className="py-5" asChild isActive={url === item.url}>
-                            <Link href={item.url}>
-                                <item.icon />
-                                <span className="text-lg">{item.title}</span>
-                            </Link>
-                        </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    ))}
+                    {items.map((item) => {
+                        if ("url" in item) {
+                            return (
+                                <SidebarGroup>
+                                    <SidebarGroupContent>
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton asChild isActive={url === item.url}>
+                                                <Link href={item.url}>
+                                                    <item.icon />
+                                                    <span>{item.title}</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    </SidebarGroupContent>
+                                </SidebarGroup>
+                            )
+                        }
+
+                        return (
+                            <Collapsible title={item.title} defaultOpen className="group/collapsible">
+                                <SidebarGroup>
+                                    <SidebarGroupLabel className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" asChild>
+                                        <CollapsibleTrigger>    
+                                            {item.title}{" "}
+                                            <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                                        </CollapsibleTrigger>
+                                    </SidebarGroupLabel>
+                                    <CollapsibleContent>
+                                        <SidebarGroupContent>
+                                            {item.subitems.map((subitem) => (
+                                                <SidebarMenuItem key={subitem.title}>
+                                                    <SidebarMenuButton asChild isActive={url === subitem.url}>
+                                                        <Link href={subitem.url}>
+                                                            <subitem.icon />
+                                                            <span>{subitem.title}</span>
+                                                        </Link>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            ))}
+                                        </SidebarGroupContent>
+                                    </CollapsibleContent>
+                                </SidebarGroup>
+                            </Collapsible>
+                        )
+                    })}
                     </SidebarMenu>
                 </SidebarGroupContent>
                 </SidebarGroup>
