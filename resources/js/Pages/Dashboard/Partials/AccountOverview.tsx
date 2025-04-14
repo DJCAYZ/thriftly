@@ -1,25 +1,27 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Separator } from "@/Components/ui/separator";
-import { Account } from "@/types";
+import { Account, AccountOverviewProp } from "@/types";
 import RecentTransactions from "./RecentTransactions";
 import ExpenseOverviewChart from "./ExpenseOverviewChart";
 import { Link } from "@inertiajs/react";
 
 export default function AccountOverview({
-    account
+    account,
+    account_overview,
 } : {
-    account: Account
+    account: Account,
+    account_overview: AccountOverviewProp
 }) {
 
-    const {balance, expenseOverview, recentTransactions} = account;
+    const {expenseOverview, recentTransactions} = account_overview;
 
     return (
         <div>
             <div className="flex flex-row mb-5 items-center justify-between">
                 <div className="flex flex-col">
-                    <p className="text-sm text-gray-900">ACCOUNT BALANCE</p>
-                    <h1 className="text-[4.5rem]">{balance.toLocaleString("en-US", {style:'currency', 'currency': 'PHP'})}</h1>
+                    <p className="text-sm text-gray-500">ACCOUNT BALANCE</p>
+                    <h1 className="text-[4.5rem]">{account.balance.toLocaleString("en-US", {style:'currency', 'currency': 'PHP'})}</h1>
                 </div>
                 <Link href='/transactions/new'>
                     <PrimaryButton className="h-10">New Transaction</PrimaryButton>
@@ -39,27 +41,25 @@ export default function AccountOverview({
                     </Card>
                     <div className="items-center self-center w-full h-full flex-1 m-2">
                         <h2>Expense Categories</h2>
-                        {expenseOverview.map(({title, amount}) => {
+                        {expenseOverview.map(({name, amount}) => {
                             return (
-                                <p>{title} - {amount.toLocaleString("en-US", {style: 'currency', currency: 'PHP'})}</p>
+                                <p>{name} - {amount.toLocaleString("en-US", {style: 'currency', currency: 'PHP'})}</p>
                             )
                         })}
                     </div>
                 </div>
             </>
             ) : <p className="mt-5">No transactions found</p>}
-            {recentTransactions.length > 0 ? (<>
-                <Separator />
-                <div className="flex flex-col pt-2">
-                    <div className="flex flex-row justify-between">
-                        <h1 className="">Recent Transactions</h1>
-                        <PrimaryButton>All Transactions</PrimaryButton>
-                    </div>
-                    <div>
-                        <RecentTransactions transactions={recentTransactions} />
-                    </div>
+            <Separator />
+            <div className="flex flex-col pt-2">
+                <div className="flex flex-row justify-between">
+                    <h1 className="">Recent Transactions</h1>
+                    <PrimaryButton>All Transactions</PrimaryButton>
                 </div>
-            </>) : <p className="mt-5">No transactions found</p>}
+                <div>
+                    <RecentTransactions transactions={recentTransactions} />
+                </div>
+            </div>
         </div>
     );
 }

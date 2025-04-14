@@ -15,6 +15,7 @@ class Transaction extends Model
     use HasUuids;
 
     protected $fillable = [ 'amount', 'type', 'description' ];
+    protected $hidden = ['account_id', 'category_id', 'id', 'user_id', 'transfer_info_id'];
 
     public function user(): BelongsTo
     {
@@ -41,7 +42,6 @@ class Transaction extends Model
     {
         return [
             'type' => TransactionType::class,
-            'amount' => 'decimal:2'
         ];
     }
 

@@ -17,6 +17,7 @@ class TransactionCategory extends Model
     public $timestamps = false;
 
     protected $fillable = ['type', 'user_id', 'name'];
+    protected $hidden = ['id', 'user_id'];
 
     public function user(): BelongsTo
     {

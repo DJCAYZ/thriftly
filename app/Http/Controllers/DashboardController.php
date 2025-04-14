@@ -4,69 +4,58 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\User;
+use App\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
+use function Pest\Laravel\put;
+
 class DashboardController extends Controller
 {
     public function index(Request $request) {
-        $accounts = User::find(Auth::id())->accounts;
+        $accounts = $request->user()->accounts()->orderBy('id')->get();
 
-        $accounts_info = $accounts->map(function (Account $account) {
-            $transactions = $account->transactions;
-            $balance = $account->starting_balance;
-            $expenseOverview = [];
-            $recentTransactions = [];
-
-            if (!$transactions->isEmpty()) {
-                $balance += $account->transactions()->sum('amount');
-                $recentTransactions = $account->transactions()
-                    ->select('transactions.ref_id', 'transactions.type', 'transactions.amount', 'transactions.created_at as date', 'transaction_categories.name as category')
-                    ->leftJoin('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
-                    ->orderBy('created_at', 'desc')
+        
+        $accounts_overview = $accounts->reduce(function (array $info, Account $account) {
+            $info[$account->ref_id] = [
+                'recentTransactions' => $account->transactions()
+                    ->orderBy('created_at', 'DESC')
                     ->take(5)
                     ->get()
                     ->map(function ($transaction) {
                         return [
-                            'ref_id' => $transaction['ref_id'],
-                            'type' => $transaction['type']->name,
-                            'amount' => (int) $transaction['amount'],
-                            'date' => $transaction['date'],
-                            'category' => $transaction['category'],
+                            ...$transaction->toArray(),
+                            'amount' => (float) $transaction['amount'],
                         ];
-                    });
-                $expenseOverview = $account->transactions()
-                    ->select(DB::raw('transaction_categories.name AS name, ABS(SUM(transactions.amount)) AS amount'))
-                    ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
+                    }),
+                'expenseOverview' => $account->transactions()
                     ->where([
-                        ['transactions.type', '=', 'Expense'],
+                        ['transactions.type', '=', TransactionType::Expense],
                         ['transactions.created_at', '>=', 'UNIX_TIMESTAMP(DATE(NOW() - INTERVAL 30 DAY))'],
                     ])
+                    ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
                     ->groupBy('transactions.category_id')
                     ->orderBy('amount', 'desc')
+                    ->select(
+                        'transaction_categories.name',
+                        DB::raw('SUM(ABS(transactions.amount)) AS amount'),
+                    )
                     ->get()
                     ->map(function ($overview) {
                         return [
-                            'title' => $overview['name'],
-                            'amount' => (int) $overview['amount'],
+                            ...$overview->toArray(),
+                            'amount' => (float) $overview['amount'],
                         ];
-                    });
-            }
-
-            return [
-                'ref_id' => $account->ref_id,
-                'title' => $account->title,
-                'balance' => $balance,
-                'expenseOverview' => $expenseOverview,
-                'recentTransactions' => $recentTransactions,
+                    }),
             ];
-            
-        });
+
+            return $info;
+        }, []);
 
         return Inertia::render('Dashboard/Dashboard', [
-            'accounts' => $accounts_info,
+            'accounts_overview' => $accounts_overview,
         ]);
     }
 }

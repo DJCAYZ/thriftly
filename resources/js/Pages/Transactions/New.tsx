@@ -5,13 +5,7 @@ import { Head, Link } from "@inertiajs/react";
 import NewExpense from "./NewFormPartials/NewExpense";
 import NewTransfer from "./NewFormPartials/NewTransfer";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
-import { PageProps } from "@/types";
-import { string } from "zod";
-
-export type Account = {
-    ref_id: string,
-    title: string,
-};
+import { Account, PageProps } from "@/types";
 
 export type Category = {
     ref_id: string,

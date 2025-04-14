@@ -33,22 +33,31 @@ class TransactionsController extends Controller
         $transaction = Transaction::firstWhere('ref_id', $uuid);
         $account = $transaction->account;
         $category = $transaction->category;
-        return Inertia::render('Transactions/Show', [
-            'transaction' => [
-                'ref_id' => $transaction->ref_id,
+
+        $details = [
+            'ref_id' => $transaction->ref_id,
                 'amount' => $transaction->amount,
                 'type' => $transaction->type->name,
                 'description' => $transaction->description,
                 'created_at' => $transaction->created_at,
-                'account' => [
-                    'ref_id' => $account->ref_id,
-                    'title' => $account->title,
-                ],
-                'category' => [
-                    'ref_id' => $category->ref_id,
-                    'name' => $category->name,
-                ],
-            ],
+        ];
+
+        if ($transaction->type === TransactionType::Transfer) {
+            $info_ref_id = $transaction->transferInfo->ref_id;
+            return redirect("/transactions/transfers/$info_ref_id");
+        } else {
+            $details['account'] = [
+                'ref_id' => $account->ref_id,
+                'title' => $account->title,
+            ];
+            $details['category'] = [
+                'ref_id' => $category->ref_id,
+                'name' => $category->name,
+            ];
+        }
+
+        return Inertia::render('Transactions/Show', [
+            'transaction' => $details,
         ]);
     }
 
@@ -144,6 +153,6 @@ class TransactionsController extends Controller
         }
         
 
-        return redirect()->intended('/dashboard');
+        return redirect('/transactions');
     }
 }

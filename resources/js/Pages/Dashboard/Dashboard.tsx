@@ -1,12 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import Authenticated from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import AccountOverview from "./Partials/AccountOverview";
-import { Account, PageProps } from "@/types";
+import { Head, usePage } from '@inertiajs/react';
+import { Account, AccountOverviewProp, PageProps } from "@/types";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
+import AccountOverview from "./Partials/AccountOverview";
 
-export default function Dashboard({ accounts }: PageProps<{ accounts: Account[] }>) {
-    
+export default function Dashboard({ accounts_overview }: PageProps<{ accounts_overview: Record<string, AccountOverviewProp> }>) {
+
+    const { accounts } = usePage().props;
+
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-5">
             <Head title="Dashboard" />
@@ -22,7 +24,7 @@ export default function Dashboard({ accounts }: PageProps<{ accounts: Account[] 
                 {accounts.map((account) => {
                     return (
                         <TabsContent value={account.ref_id}>
-                            <AccountOverview account={account} />
+                            <AccountOverview account={account} account_overview={accounts_overview[account.ref_id]} />
                         </TabsContent>
                     )
                 })}

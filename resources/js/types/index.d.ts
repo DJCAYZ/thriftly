@@ -13,6 +13,11 @@ export type PageProps<
     auth: {
         user: User;
     };
+    accounts: Account[],
+    categories: {
+        income: Category[],
+        expense: Category[],
+    }
     ziggy: Config & { location: string };
     flash: {
         status: string,
@@ -21,23 +26,48 @@ export type PageProps<
     }
 };
 
+export interface Transaction {
+    ref_id: string,
+    type: 'Income' | 'Expense' | 'Transfer',
+    account: Account,
+    amount: numner,
+    category?: Category,
+    created_at: string,
+    updated_at: string,
+    description?: string,
+}
+
+export interface Category {
+    ref_id: string,
+    name: string,
+    type: 'Income' | 'Expense',
+}
+
 export interface Account {
     ref_id: string,
     title: string,
+    
     balance: number,
-    expenseOverview: ExpenseOverview[],
-    recentTransactions: Transaction[],
-};
+    
+    created_at: string,
+    updated_at: string,
 
-export type ExpenseOverview = {
-    title: string,
+}
+
+export interface TransferInfo {
+    ref_id: string,
+    from_account: Account,
+    to_account: Account,
+    fromTransaction: Transaction,
+    toTransaction: Transaction,
+}
+
+export interface ExpenseOverview {
+    name: string,
     amount: number,
 }
 
-export type Transaction = {
-    ref_id: string,
-    type: 'Income' | 'Expense' | 'Transfer',
-    category: string,
-    date: Date,
-    amount: number,
+export interface AccountOverviewProp extends Account {
+    expenseOverview: ExpenseOverview[],
+    recentTransactions: Transaction[],
 }

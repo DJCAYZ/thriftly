@@ -11,10 +11,10 @@ const columns: ColumnDef<Transaction>[] = [
         header: 'ID',
     },
     {
-        accessorKey: 'date',
+        accessorKey: 'created_at',
         header: 'Date',
         cell: ({ row }) => {
-            const date = Date.parse(row.getValue('date'));
+            const date = Date.parse(row.getValue('created_at'));
             const formatted = new Intl.DateTimeFormat('en-US', {
                 dateStyle: 'medium',
                 timeStyle: 'short',
@@ -36,8 +36,7 @@ const columns: ColumnDef<Transaction>[] = [
         header: 'Category',
         cell: ({ row }) => {
             if (row.getValue('type') === 'Transfer') {
-                const amount = parseFloat(row.getValue('amount'));
-                return amount < 0 ? 'OUT' : 'IN'
+                return (row.getValue('amount') as number) < 0 ? 'OUT' : 'IN'
             } else {
                 return row.getValue('category');
             }

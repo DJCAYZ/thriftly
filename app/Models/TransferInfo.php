@@ -15,6 +15,8 @@ class TransferInfo extends Model
     protected $table = 'transfer_info';
     public $timestamps = false;
 
+    protected $hidden = [ 'id', 'to_account_id', 'from_account_id' ];
+
     public function toAccount(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'to_account_id');

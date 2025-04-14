@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\TransferInfoController;
 use App\Models\Transaction;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -10,23 +11,26 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
-    Route::get('/', [TransactionsController::class, 'list']);
-    Route::get('/new', [TransactionsController::class, 'new']);
-    Route::post('/new', [TransactionsController::class, 'create']);
-    
-    Route::get('/{uuid}', [TransactionsController::class, 'show']);
-    Route::delete('/{uuid}', [TransactionsController::class, 'delete']);
+    Route::prefix('transfers')->controller(TransferInfoController::class)->group(function() {
+        Route::get('/', 'list');
+        Route::get('/{uuid}', 'show');
+        Route::delete('/{uuid}', 'delete');
+    });
+
+    Route::controller(TransactionsController::class)->group(function() {
+        Route::get('/', 'list');
+        Route::get('/new', 'new');
+        Route::post('/new', 'create');
+        Route::get('/{uuid}', 'show');
+        Route::delete('/{uuid}', 'delete');
+    });
+
 });
 
 Route::middleware('auth')->group(function () {

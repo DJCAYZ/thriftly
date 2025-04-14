@@ -29,7 +29,7 @@ export default function ExpenseOverviewChart({
                 <Pie
                     data={chartData}
                     dataKey="amount"
-                    nameKey="title"
+                    nameKey="name"
                     innerRadius={60}
                     strokeWidth={5}
                 >
@@ -44,17 +44,17 @@ export default function ExpenseOverviewChart({
                                 dominantBaseline="middle"
                             >
                                 <tspan
-                                x={viewBox.cx}
-                                y={viewBox.cy}
-                                className="fill-foreground text-xl font-bold"
+                                    x={viewBox.cx}
+                                    y={viewBox.cy}
+                                    className="fill-foreground text-xl font-bold"
                                 >
-                                {totalAmount.toLocaleString("en-US", {style: 'currency', currency: "PHP"})}
+                                    {totalAmount.toLocaleString("en-US", {style: 'currency', currency: "PHP"})}
                                 </tspan>
 
                                 <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) + 24}
-                                className="fill-muted-foreground"
+                                    x={viewBox.cx}
+                                    y={(viewBox.cy || 0) + 24}
+                                    className="fill-muted-foreground"
                                 >
                                 Total Expense
                                 </tspan>
