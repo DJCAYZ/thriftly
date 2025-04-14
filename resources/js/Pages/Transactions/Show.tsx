@@ -2,34 +2,15 @@ import DangerButton from "@/Components/DangerButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/Components/ui/alert-dialog";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb";
-import { Button } from "@/Components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
 import { Separator } from "@/Components/ui/separator";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/Components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageProps } from "@/types";
+import { PageProps, Transaction } from "@/types";
 import { Head, Link, router } from "@inertiajs/react";
 import EditDetailsForm from "./EditPartials/EditDetailsForm";
 
-export interface Transaction {
-    ref_id: string,
-    amount: number,
-    type: 'Income' | 'Expense' | 'Transfer',
-    account: {
-        ref_id: string,
-        title: string,
-    },
-    category?: {
-        ref_id: string,
-        name: string,
-    },
-    description?: string,
-    created_at: string,
-}
 
 export default function Show({
     transaction
