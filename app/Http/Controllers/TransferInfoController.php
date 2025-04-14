@@ -39,7 +39,14 @@ class TransferInfoController extends Controller
         // update it
     }
 
-    public function delete(Request $request) {
-        // delete it
+    public function delete(Request $request, string $uuid) {
+        $transferInfo = TransferInfo::firstWhere('ref_id', $uuid);
+        // TODO create security policies for transfer info models
+
+        $transferInfo->transactions()->delete();
+
+        $transferInfo->delete();
+
+        return redirect('/transactions/transfers');
     }
 }
