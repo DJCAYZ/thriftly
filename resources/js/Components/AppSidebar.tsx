@@ -104,7 +104,7 @@ export function AppSidebar() {
                                         </CollapsibleTrigger>
                                     </SidebarGroupLabel>
                                     <CollapsibleContent>
-                                        <SidebarGroupContent>
+                                        <SidebarGroupContent className="space-y-1">
                                             {item.subitems.map((subitem) => (
                                                 <SidebarMenuItem key={subitem.title}>
                                                     <SidebarMenuButton asChild isActive={url === subitem.url}>
