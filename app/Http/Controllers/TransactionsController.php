@@ -31,6 +31,7 @@ class TransactionsController extends Controller
 
     public function show(Request $request, string $uuid) {
         $transaction = Transaction::firstWhere('ref_id', $uuid);
+        Gate::authorize('view', $transaction);
         $account = $transaction->account;
         $category = $transaction->category;
 
