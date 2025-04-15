@@ -31,7 +31,7 @@ export default function ShowTransferInfo({ transferInfo }: PageProps<{ transferI
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger onClick={() => {
-                                navigator.clipboard.writeText('1');
+                                navigator.clipboard.writeText(transferInfo.ref_id);
                                 toast({
                                     title: 'Copied to clipboard',
                                     description: `The UUID ${transferInfo.ref_id} has been copied to clipboard`,
