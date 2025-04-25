@@ -36,14 +36,8 @@ return [
     */
 
     'mailers' => [
-
-        'gmail' => [
-            'transport' => 'smtp',
-            'encryption' => env('GMAIL_ENCRYPTION', 'ssl'),
-            'host' => env('GMAIL_HOST', 'smtp.gmail.com'),
-            'port' => env('GMAIL_PORT', 465),
-            'username' => env('GMAIL_USERNAME'),
-            'password' => env('GMAIL_PASSWORD'),
+        'mailgun' => [
+            'transport' => 'mailgun',
         ],
 
         'mailpit' => [
@@ -74,7 +68,7 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'gmail',
+                'mailgun',
                 'mailpit',
                 'log',
             ],
@@ -93,7 +87,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'noreply@thriftly.sytes.net'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@mg.djcayz.xyz'),
         'name' => env('MAIL_FROM_NAME', 'Thriftly'),
     ],
 
