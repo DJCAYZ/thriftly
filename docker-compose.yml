@@ -100,6 +100,7 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
 
 networks:
+    default:
     traefik:
         name: "traefik"
         external: true
