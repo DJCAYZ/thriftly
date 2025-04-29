@@ -1,7 +1,9 @@
 name: thriftly
 
 services:
-    thriftly:
+    thriftly.dev:
+        profiles:
+            - dev
         build:
             context: .
             target: development
@@ -12,15 +14,40 @@ services:
             SSL_MODE: "off"
         volumes:
             - .:/var/www/html
-        networks:
-            - sail
         depends_on:
             - mysql
             - mailpit
-            - meilisearch
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.thriftly.rule=Host(`whoami.docker.localhost`)"
+            - "traefik.http.routers.thriftly.rule=Host(`thriftly.localhost`)"
+            - "traefik.http.routers.thriftly.entrypoints=web"
+            - "traefik.docker.network=traefik"
+        networks:
+            - default
+            - traefik
+
+    thriftly.prod:
+        profiles:
+            - prod
+        build:
+            context: .
+            target: production
+        environment:
+            AUTORUN_ENABLED: "true"
+            SSL_MODE: "off"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - mysql
+            - mailpit
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.thriftly.rule=Host(`thriftly.djcayz.xyz`)"
+            - "traefik.http.routers.thriftly.entrypoints=web,websecure"
+            - "traefik.docker.network=traefik"
+        networks:
+            - default
+            - traefik
 
     # laravel.test:
     #     build:
@@ -60,10 +87,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
-        networks:
-            - sail
+            - 'mysql:/var/lib/mysql'
         healthcheck:
             test:
                 - CMD
@@ -72,11 +96,19 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    mailpit:
+        profiles:
+            - dev
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+
 networks:
-    sail:
-        driver: bridge
+    traefik:
+        name: "traefik"
+        external: true
 volumes:
-    sail-mysql:
+    mysql:
         driver: local
-    sail-meilisearch:
-        driver: local
+
