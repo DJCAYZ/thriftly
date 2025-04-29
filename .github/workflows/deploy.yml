@@ -31,7 +31,7 @@ jobs:
         run: npm run build
       
       - name: Synchronize Files to Server
-        uses: easingthemes/ssh-deploy@v2.1.5
+        uses: easingthemes/ssh-deploy@v5.1.0
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SOURCE: "."
