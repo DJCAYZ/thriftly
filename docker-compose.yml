@@ -16,6 +16,7 @@ services:
             - .:/var/www/html
         depends_on:
             - mysql
+            - mailpit
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.thriftly.rule=Host(`thriftly.localhost`)"
@@ -38,7 +39,6 @@ services:
             - .:/var/www/html
         depends_on:
             - mysql
-            - mailpit
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.thriftly.rule=Host(`thriftly.djcayz.xyz`)"
