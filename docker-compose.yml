@@ -102,7 +102,7 @@ services:
 networks:
     default:
     traefik:
-        name: "traefik"
+        name: traefik
         external: true
 volumes:
     mysql:
