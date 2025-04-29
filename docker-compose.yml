@@ -20,8 +20,6 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.thriftly.rule=Host(`thriftly.localhost`)"
-            - "traefik.http.routers.thriftly.entrypoints=web"
-            - "traefik.docker.network=traefik"
         networks:
             - default
             - traefik
@@ -42,10 +40,8 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.thriftly.rule=Host(`thriftly.djcayz.xyz`)"
-            - "traefik.http.routers.thriftly.entrypoints=web,websecure"
             - "traefik.http.routers.thriftly.tls=true"
             - "traefik.http.routers.thriftly.tls.certresolver=myresolver"
-            - "traefik.docker.network=traefik"
         networks:
             - default
             - traefik
@@ -78,8 +74,6 @@ services:
     #         - meilisearch
     mysql:
         image: 'mysql/mysql-server:8.0'
-        ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: '%'
