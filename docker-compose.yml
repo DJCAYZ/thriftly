@@ -33,8 +33,6 @@ services:
         environment:
             AUTORUN_ENABLED: "true"
             SSL_MODE: "off"
-        volumes:
-            - .:/var/www/html
         depends_on:
             - mysql
         labels:
