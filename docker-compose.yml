@@ -1,77 +1,40 @@
-name: thriftly
-
 services:
-    thriftly.dev:
-        profiles:
-            - dev
+    laravel.test:
         build:
-            context: .
-            target: development
+            context: './vendor/laravel/sail/runtimes/8.4'
+            dockerfile: Dockerfile
             args:
-                USER_ID: $UID
-                GROUP_ID: $GID
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.4/app'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${APP_PORT:-80}:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
-            SSL_MODE: "off"
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
-            - .:/var/www/html
+            - '.:/var/www/html'
+        networks:
+            - sail
         depends_on:
-            - mysql
             - mailpit
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.thriftly.rule=Host(`thriftly.localhost`)"
-        networks:
-            - default
-            - traefik
-
-    thriftly.prod:
-        profiles:
-            - prod
-        build:
-            context: .
-            target: production
-        environment:
-            AUTORUN_ENABLED: "true"
-            SSL_MODE: "off"
-        depends_on:
             - mysql
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.thriftly.rule=Host(`thriftly.djcayz.xyz`)"
-            - "traefik.http.routers.thriftly.tls=true"
-            - "traefik.http.routers.thriftly.tls.certresolver=myresolver"
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
-            - default
-            - traefik
-
-    # laravel.test:
-    #     build:
-    #         context: './vendor/laravel/sail/runtimes/8.4'
-    #         dockerfile: Dockerfile
-    #         args:
-    #             WWWGROUP: '${WWWGROUP}'
-    #     image: 'sail-8.4/app'
-    #     extra_hosts:
-    #         - 'host.docker.internal:host-gateway'
-    #     ports:
-    #         - '${APP_PORT:-80}:80'
-    #         - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
-    #     environment:
-    #         WWWUSER: '${WWWUSER}'
-    #         LARAVEL_SAIL: 1
-    #         XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-    #         XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-    #         IGNITION_LOCAL_SITES_PATH: '${PWD}'
-    #     volumes:
-    #         - '.:/var/www/html'
-    #     networks:
-    #         - sail
-    #     depends_on:
-    #         - mysql
-    #         - mailpit
-    #         - meilisearch
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: '%'
@@ -80,7 +43,10 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'mysql:/var/lib/mysql'
+            - 'sail-mysql:/var/lib/mysql'
+            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - sail
         healthcheck:
             test:
                 - CMD
@@ -89,20 +55,9 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-    mailpit:
-        profiles:
-            - dev
-        image: 'axllent/mailpit:latest'
-        ports:
-            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
-            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
-
 networks:
-    default:
-    traefik:
-        name: traefik
-        external: true
+    sail:
+        driver: bridge
 volumes:
-    mysql:
+    sail-mysql:
         driver: local
-
