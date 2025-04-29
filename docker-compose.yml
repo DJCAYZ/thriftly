@@ -44,6 +44,8 @@ services:
             - "traefik.enable=true"
             - "traefik.http.routers.thriftly.rule=Host(`thriftly.djcayz.xyz`)"
             - "traefik.http.routers.thriftly.entrypoints=web,websecure"
+            - "traefik.http.routers.thriftly.tls=true"
+            - "traefik.http.routers.thriftly.tls.certresolver=myresolver"
             - "traefik.docker.network=traefik"
         networks:
             - default
