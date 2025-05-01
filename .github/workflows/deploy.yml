@@ -38,6 +38,13 @@ jobs:
           REMOTE_HOST: ${{ secrets.VPS_HOST }}
           REMOTE_USER: ${{ secrets.VPS_USER }}
           TARGET: "/var/www/html/thriftly.djcayz.xyz"
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
+            php artisan down
+          SCRIPT_AFTER: |
+            whoami
+            ls -al
         
       - name: Run Remote/Artisan Commands
         uses: appleboy/ssh-action@v0.1.6
@@ -49,3 +56,4 @@ jobs:
             cd /var/www/html/thriftly.djcayz.xyz
             php artisan migrate --force
             php artisan optimize
+            php artisan up
