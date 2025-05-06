@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionsController;
@@ -15,6 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('accounts')->controller(AccountsController::class)->group(function() {
+    Route::get('/', 'list');
+    Route::post('/new', 'create');
+});
 
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
     Route::prefix('transfers')->controller(TransferInfoController::class)->group(function() {

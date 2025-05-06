@@ -14,6 +14,7 @@ class Account extends Model
     use HasUuids;
     protected $table = 'accounts';
     protected $hidden = ['id', 'user_id'];
+    protected $fillable = ['title', 'starting_balance'];
 
     protected function casts(): array
     {

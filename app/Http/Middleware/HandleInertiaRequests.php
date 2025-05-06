@@ -35,8 +35,9 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
         $accounts = $user ? $user->accounts()->orderBy('id')->get()->map(function ($account) {
             return [
-                'balance' => $account->transactions()->sum('amount') + $account->starting_balance,
                 ...$account->toArray(),
+                'balance' => $account->transactions()->sum('amount') + $account->starting_balance,
+                'starting_balance' => (float) $account->starting_balance,
             ];
         }) : [];
         $categories = $user ? [

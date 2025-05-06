@@ -56,11 +56,11 @@ const items: Array<MenuItem | MenuItemGroup> = [
         },
     ],
   },
-  {
-    title: "Statistics",
-    url: "/statistics",
-    icon: ChartColumn,
-  },
+//   {
+//     title: "Statistics",
+//     url: "/statistics",
+//     icon: ChartColumn,
+//   },
 ];
 
 export function AppSidebar() {

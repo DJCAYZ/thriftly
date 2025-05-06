@@ -48,7 +48,8 @@ export interface Account {
     title: string,
     
     balance: number,
-    
+    starting_balance: number,
+
     created_at: string,
     updated_at: string,
 
