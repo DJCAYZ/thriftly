@@ -4,6 +4,7 @@ import { Head, usePage } from '@inertiajs/react';
 import { Account, AccountOverviewProp, PageProps } from "@/types";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/Components/ui/breadcrumb";
 import AccountOverview from "./Partials/AccountOverview";
+import AddAccountForm from "../Accounts/ListAccountsPartials/AddAccountForm";
 
 export default function Dashboard({ accounts_overview }: PageProps<{ accounts_overview: Record<string, AccountOverviewProp> }>) {
 
@@ -30,7 +31,10 @@ export default function Dashboard({ accounts_overview }: PageProps<{ accounts_ov
                 })}
             </Tabs>
             ) : (
-                <h1>Create an account to get started.</h1>
+                <div className="w-full flex flex-col items-center space-y-2">
+                    <p>No accounts found.</p>
+                    <AddAccountForm />
+                </div>
             )}
     </div>
     );
