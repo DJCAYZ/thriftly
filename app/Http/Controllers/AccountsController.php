@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\TransferInfo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -26,6 +27,27 @@ class AccountsController extends Controller
 
         $user->accounts()->save($account);
 
-        return redirect()->action([static::class, 'list']);
+        return redirect('/accounts');
+    }
+
+    public function delete(Request $request, string $uuid) {
+        $account = Account::with(['transfersFrom.transactions', 'transfersTo.transactions'])->where('ref_id', $uuid)->first();
+
+        $account->transfersTo->each(function (TransferInfo $info) {
+            $info->transactions->each->delete();
+        });
+
+        $account->transfersFrom->each(function (TransferInfo $info) {
+            $info->transactions->each->delete();
+        });
+
+        $account->transfersTo()->delete();
+        $account->transfersFrom()->delete();
+
+        $account->transactions()->delete();
+
+        $account->delete();
+        
+        return redirect('/accounts');
     }
 }

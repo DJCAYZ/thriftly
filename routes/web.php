@@ -20,6 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::prefix('accounts')->controller(AccountsController::class)->group(function() {
     Route::get('/', 'list');
     Route::post('/new', 'create');
+    Route::delete('/{uuid}', 'delete');
 });
 
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
