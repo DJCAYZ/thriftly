@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 
 class Account extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
     protected $table = 'accounts';
     protected $hidden = ['id', 'user_id'];
     protected $fillable = ['title', 'starting_balance'];

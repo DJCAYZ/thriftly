@@ -6,13 +6,14 @@ use App\TransactionType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 
 class Transaction extends Model
 {
-    protected $table = 'transactions';
+    use HasUuids, SoftDeletes;
 
-    use HasUuids;
+    protected $table = 'transactions';
 
     protected $fillable = [ 'amount', 'type', 'description' ];
     protected $hidden = ['account_id', 'category_id', 'id', 'user_id', 'transfer_info_id'];
