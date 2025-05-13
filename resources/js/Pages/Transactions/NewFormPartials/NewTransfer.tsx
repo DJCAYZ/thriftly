@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { router } from '@inertiajs/react';
-import { Account } from '../New';
+import { Account } from '@/types';
 
 const formSchema = z.object({
     account: z.string().uuid(),

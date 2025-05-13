@@ -4,10 +4,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Input } from '@/Components/ui/input';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Button } from '@/Components/ui/button';
 import { router } from '@inertiajs/react';
-import { Account, Category } from '../New';
+import { Account, Category } from '@/types';
 
 const formSchema = z.object({
     account: z.string().uuid(),
