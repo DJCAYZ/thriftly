@@ -45,12 +45,7 @@ export default function Show({
                     </TooltipProvider>
                 </div>
                 <div className="flex flex-row space-x-2">
-                    <Dialog>
-                        <DialogTrigger>
-                            <PrimaryButton className="w-full text-center">Edit</PrimaryButton>
-                        </DialogTrigger>
-                        <EditDetailsForm transaction={transaction} />
-                    </Dialog>
+                    <EditDetailsForm transaction={transaction} />
                     <AlertDialog>
                         <AlertDialogTrigger>
                             <DangerButton className="bg-destructive w-full text-center">Delete</DangerButton>

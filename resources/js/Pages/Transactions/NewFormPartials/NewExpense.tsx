@@ -80,20 +80,18 @@ export default function NewExpense({ accounts, categories }: { accounts: Account
                             render={({ field }) => (
                                 <FormItem className='w-full'>
                                     <FormLabel>Category</FormLabel>
-                                    <FormControl>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select a category" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                            {categories.map((category) => (
-                                                    <SelectItem key={category.ref_id} value={category.ref_id}>{category.name}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a category" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                        {categories.map((category) => (
+                                                <SelectItem key={category.ref_id} value={category.ref_id}>{category.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                     <FormDescription>
                                         The category for this expense
                                     </FormDescription>

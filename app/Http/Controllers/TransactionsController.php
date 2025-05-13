@@ -142,7 +142,35 @@ class TransactionsController extends Controller
 
             return redirect("/transactions/" .  $transaction->ref_id);
         }
-        
+    }        
 
+    public function update(Request $request, string $uuid) {
+        $request->validate([
+            'account_id' => 'required|uuid|exists:accounts,ref_id',
+            'amount' => 'required|gt:0',
+            'category_id' => 'required|uuid|exists:transaction_categories,ref_id',
+            'description' => 'nullable',
+        ]);
+
+        $transaction = Transaction::firstWhere('ref_id', $uuid);
+        
+        if ($request->input('account_id') != $transaction->account->ref_id) {
+            $account = Account::firstWhere('ref_id', $request->input('account_id'));
+            $transaction->account()->associate($account);
+        }
+
+        if ($request->input('category_id') != $transaction->category->ref_id) {
+            $category = TransactionCategory::firstWhere('ref_id', $request->input('category_id'));
+            $transaction->category()->associate($category);
+        }
+
+        $transaction->fill([
+            'amount' => $request->input('amount'),
+            'description' => $request->input('description'),
+        ]);
+
+        $transaction->save();
+
+        return redirect('/transactions/' . $transaction->ref_id);
     }
 }

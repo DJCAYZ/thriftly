@@ -21,6 +21,7 @@ Route::prefix('accounts')->controller(AccountsController::class)->group(function
     Route::get('/', 'list');
     Route::post('/new', 'create');
     Route::delete('/{uuid}', 'delete');
+    // Route::patch('/{uuid}', 'update');
 });
 
 Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function () {
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'verified'])->prefix('transactions')->group(function 
         Route::get('/new', 'new');
         Route::post('/new', 'create');
         Route::get('/{uuid}', 'show');
+        Route::patch('/{uuid}', 'update');
         Route::delete('/{uuid}', 'delete');
     });
 
