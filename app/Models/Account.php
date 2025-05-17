@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Ramsey\Uuid\Uuid;
+
+class Account extends Model
+{
+    use HasUuids, SoftDeletes;
+    protected $table = 'accounts';
+    protected $hidden = ['id', 'user_id'];
+    protected $fillable = ['title', 'starting_balance'];
+
+    protected function casts(): array
+    {
+        return [
+            'starting_balance' => 'decimal:2',
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function transfersTo(): HasMany
+    {
+        return $this->hasMany(TransferInfo::class, 'to_account_id');;
+    }
+
+    public function transfersFrom(): HasMany
+    {
+        return $this->hasMany(TransferInfo::class, 'from_account_id');;
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'account_id');
+    }
+
+    public function newUniqueId(): string
+    {
+        return (string) Uuid::uuid4();
+    }
+
+    public function uniqueIds(): array
+    {
+        return ['ref_id'];
+    }
+}
