@@ -39,7 +39,7 @@ class DashboardController extends Controller
                         ['transactions.created_at', '>=', 'UNIX_TIMESTAMP(DATE(NOW() - INTERVAL 30 DAY))'],
                     ])
                     ->join('transaction_categories', 'transactions.category_id', '=', 'transaction_categories.id')
-                    ->groupBy('transactions.category_id')
+                    ->groupBy('transaction_categories.id')
                     ->orderBy('amount', 'desc')
                     ->select(
                         'transaction_categories.name',
